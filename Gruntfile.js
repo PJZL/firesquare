@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jslint');
 
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON('src/manifest.webapp'),
     jslint: {
       files: [
         'src/js/*.js'
@@ -21,4 +21,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', 'Default build', ['jslint']);
+// grunt.registerTask('default', 'Default build', function(){
+//   grunt.log.write(grunt.config.get('pkg.name')).ok();
+// });
 };
