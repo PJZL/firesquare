@@ -1,4 +1,4 @@
 firesquare
 ==========
 
-FourSquare for Firefox OS
+FourSquare client for Firefox OS
