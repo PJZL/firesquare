@@ -1,7 +1,7 @@
 {
   "name": "FireSquare",
   "dependencies": {
-    "jquery": "~1.9.1",
+    "jquery": "~2.0.2",
     "gaia-bb": "git://github.com/mozilla-b2g/Gaia-UI-Building-Blocks.git",
     "requirejs": "2.1.5",
     "angular": "v1.0.7"
