@@ -1,0 +1,13 @@
+{
+  "name": "FireSquare",
+  "version": "0.0.1",
+  "description": "FourSquare client for Firefox OS",
+  "launch_path": "/index.html",
+  "developer": {
+    "name": "firesquare",
+    "url": "https://github.com/angelovdeodd/firesquare"
+  },
+  "icons": {
+    "128": "/ico-128.png"
+  }
+}
