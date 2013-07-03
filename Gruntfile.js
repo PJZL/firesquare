@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+  'use strict';
 
   grunt.loadNpmTasks('grunt-jslint');
 
@@ -6,14 +7,20 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('src/manifest.webapp'),
     jslint: {
       files: [
-        'src/js/*.js'
+        'src/js/*.js',
+        '*.js'
       ],
       directives: {
         indent: 2,
         todo: true,
         nomen: true,
         predef: [
-          'jQuery'
+          'jQuery',
+          'require',
+          'define',
+          'Backbone',
+          'module',
+          '__dirname'
         ]
       }
     }
