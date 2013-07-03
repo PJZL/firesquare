@@ -6,9 +6,16 @@ define([
   var _user = new User({isAuth: false});
 
   function _authCallback(data) {
-    console.log(data);
 
-    var data = JSON.parse(data).response.user;
+    var data;
+
+    if (typeof(data) === 'string') {
+      //on Firefox OS data is string type
+      data = JSON.parse(data).response.user;
+    } else {
+      //on desktop browser data is object type
+      data = data.response.user;
+    }
 
     data.isAuth = true;
 
