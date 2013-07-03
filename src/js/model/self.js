@@ -1,7 +1,7 @@
 define([
   'model/user',
   'model/service'
-], function (User, service) {
+], function(User, service) {
 
   var _user = new User({isAuth: false});
 
@@ -15,9 +15,9 @@ define([
   function _auth() {
     console.log('self', service.foursquare.get('access_token'));
     $.get(
-      "https://api.foursquare.com/v2/users/self?oauth_token=" + service.foursquare.get('access_token'),
+      'https://api.foursquare.com/v2/users/self?oauth_token=' + service.foursquare.get('access_token'),
       _authCallback
-    )
+    );
   }
 
   service.foursquare.on('change:access_token', _auth);
