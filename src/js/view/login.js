@@ -43,7 +43,7 @@ define([
     $('.login').on('click', _login);
     $('.exit').on('click', _exit);
     $(window).off('message', _message);
-    $('body').html(_.template(spinnerTemplate));
+    $('body').html(_.template(spinnerTemplate, {message: 'Logging in ...'}));
   }
 
   function _exit() {
