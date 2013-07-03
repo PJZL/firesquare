@@ -1,8 +1,9 @@
 define([
   'text!template/login.html',
+  'text!template/spinner.html',
   'text!root/config.json',
   'model/service'
-], function (template, config, service){
+], function (template, spinnerTemplate, config, service){
 
   var _window;
 
@@ -42,7 +43,7 @@ define([
     $('.login').on('click', _login);
     $('.exit').on('click', _exit);
     $(window).off('message', _message);
-    $('body').empty();
+    $('body').html(_.template(spinnerTemplate, {message: 'Logging in ...'}));
   }
 
   function _exit() {
@@ -51,8 +52,6 @@ define([
   }
 
   return Backbone.View.extend({
-
     initialize: _initialize
-    
   });
 });
