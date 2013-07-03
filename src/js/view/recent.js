@@ -5,7 +5,7 @@ define([
 
   return Backbone.View.extend({
     initialize: function() {
-      console.log('it works!');
+      new Drawer();
     }
   });
 });

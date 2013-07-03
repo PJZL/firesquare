@@ -2,7 +2,7 @@ define([
   'view/recent',
   'view/login',
   'model/self'
-], function (Recent, Login, Self) {
+], function (Recent, Login, self) {
   'use strict';
 
   return Backbone.Router.extend({
@@ -15,10 +15,10 @@ define([
       var that = this,
         redirect = name;
 
-      if (!Self.get('isAuth')) {
+      if (!self.get('isAuth')) {
         name = 'login';
-        Self.on('change:isAuth', function() {
-          Self.off('change:isAuth', this);
+        self.on('change:isAuth', function() {
+          self.off('change:isAuth', this);
           that[redirect]();
         });
       }

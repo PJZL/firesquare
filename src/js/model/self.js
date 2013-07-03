@@ -6,10 +6,13 @@ define([
   var _user = new User({isAuth: false});
 
   function _authCallback(data) {
-    _user.set({
-      id: data.response.user.id,
-      isAuth: true
-    });
+    console.log(data);
+
+    var data = JSON.parse(data).response.user;
+
+    data.isAuth = true;
+
+    _user.set(data);
   }
 
   function _auth() {
