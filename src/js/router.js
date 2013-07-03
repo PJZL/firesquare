@@ -27,7 +27,7 @@ define([
     },
 
     'default': function() {
-      console.log('default');
+      var recent = new Recent();
     },
 
     login: function() {
