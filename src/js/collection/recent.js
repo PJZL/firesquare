@@ -5,7 +5,6 @@ define([
   return Backbone.Collection.extend({
     model: Checkin,
     parse: function(data){
-      console.log(data);
       if (typeof(data) === 'string') {
         return JSON.parse(data).response.recent;
       }

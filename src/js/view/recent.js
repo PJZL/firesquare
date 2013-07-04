@@ -7,9 +7,11 @@ define([
 
   var _drawer,
     _recent,
-    _fetch;
+    _fetch,
+    _maxIndex;
 
   function _initialize () {
+    _maxIndex = 0;
     _drawer = new Drawer(_remove);
     _drawer.setTitle('Recent checkins');
     _drawer.setContent(_.template(template));
@@ -50,8 +52,10 @@ define([
   }
 
   function _add(checkin) {
-    if (_recent.models.length > 0 &&
-        parseInt(checkin.get('createdAt'), 10) < parseInt(_recent.models[_recent.models.length-1].get('createdAt'), 10)) {
+    var _currentIndex = parseInt(checkin.get('createdAt'), 10);
+
+    if (_maxIndex < _currentIndex) {
+      _maxIndex = _currentIndex;
       $('.recent').prepend(_.template(checkinTemplate, checkin));
     } else {
       $('.recent').append(_.template(checkinTemplate, checkin));
