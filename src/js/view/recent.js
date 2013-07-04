@@ -28,7 +28,7 @@ define([
         typeof(_fetch.abort) === 'function' ) {
       _fetch.abort();
     }
-    recent.off('add', add);
+    recent.off('add', _add);
   }
 
   return Backbone.View.extend({

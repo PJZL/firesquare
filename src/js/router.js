@@ -6,11 +6,9 @@ define([
   return Backbone.Router.extend({
     routes: {
       'recent':   'recent',
-      'none':     'none', 
+      'none':     'none',
       '*actions': 'default'
     },
-
-    none: function(){},
 
     'default': function() {
       var recent = new Recent();
