@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('src/manifest.webapp'),
     jslint: {
       files: [
-        'src/js/*.js',
+        'src/js/**/*.js',
         '*.js'
       ],
       directives: {
