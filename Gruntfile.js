@@ -10,6 +10,9 @@ module.exports = function(grunt) {
         'src/js/**/*.js',
         '*.js'
       ],
+      exclude: [
+        'src/js/lib/text.js'
+      ],
       directives: {
         indent: 2,
         todo: true,

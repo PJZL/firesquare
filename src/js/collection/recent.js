@@ -7,7 +7,7 @@ define([
     parse: function(data){
       console.log(data);
       if (typeof(data) === 'string') {
-        return JSON.parse(data).response.recent
+        return JSON.parse(data).response.recent;
       }
       return data.response.recent;
     },
