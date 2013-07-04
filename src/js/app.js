@@ -7,10 +7,9 @@ require.config({
 });
 
 require([
-  'router'
-], function (Router) {
+  'view/login'
+], function (Login) {
   'use strict';
 
-  var router = new Router();
-  Backbone.history.start();
+  var _login = new Login();
 });

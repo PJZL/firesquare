@@ -1,11 +1,14 @@
 define([
+  'router',
   'text!template/login.html',
   'text!template/spinner.html',
   'text!root/config.json',
-  'model/service'
-], function (template, spinnerTemplate, config, service){
+  'model/service',
+  'model/self'
+], function (Router, template, spinnerTemplate, config, service, self){
 
-  var _window;
+  var _window,
+    _router;
 
   function _login(event){
     event.preventDefault();
@@ -22,18 +25,29 @@ define([
     _window = window.open(url);
   }
 
+  function _selfAuth(){
+    if (!self.get('isAuth')) {
+      _initialize();
+    } else {
+      _router = new Router();
+      Backbone.history.start();
+    }
+  }
+
   function _message(event){
     var access_token = event.originalEvent.data.access_token;
 
     if (access_token !== undefined) {
+      self.on('change:isAuth', _selfAuth);
       service.foursquare.set('access_token', access_token);
       _remove();
     }
     _window.close();
   }
 
-  function _initialize() {
-    $('body').append(_.template(template));
+  function _initialize(router) {
+    _router = router;
+    $('body').html(_.template(template));
     $(window).on('message', _message);
     $('.login').on('click', _login);
     $('.exit').on('click', _exit);

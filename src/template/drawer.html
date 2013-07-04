@@ -1,13 +1,14 @@
 <nav>
   <header>
     <menu type="toolbar">
-      <a href="#"><span class="icon icon-add">add</span></a>
+      <!--<a href="#"><span class="icon icon-add">add</span></a>-->
     </menu>
-    <h1>Title <em>(9)</em></h1>
+    <h1><%= get('firstName') %> <%= get('lastName') %><!--<em>(9)</em>--></h1>
   </header>
   <div class="inner">
     <ul>
-      <li><a href="#">label</a></li>
+      <li><a href="#recent">Recent checkins</a></li>
+      <!--
       <li><a href="#">label</a></li>
       <li><a href="#">label</a></li>
       <li><a href="#">label</a></li>
@@ -18,6 +19,7 @@
       <li><a href="#">label</a></li>
       <li><a href="#">label larger label than the </a></li>
       <li><a href="#">label</a></li>
+      -->
     </ul>
   </div>
 </nav>
@@ -25,9 +27,8 @@
 <section role="region">
   <header>
     <a href="#"><span class="icon icon-menu">menu</span></a>
-    <h1>Inbox</h1>
+    <h1></h1>
   </header>
-
   <div role="main">
   </div>
 </section>

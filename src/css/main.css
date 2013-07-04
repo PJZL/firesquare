@@ -3,6 +3,7 @@
 @import url('../components/gaia-bb/widgets/progress_activity/style.css');
 @import url('../components/gaia-bb/widgets/drawer/style.css');
 @import url('../components/gaia-bb/widgets/headers.css');
+@import url('../components/gaia-bb/widgets/lists/style.css');
 
 /* Import applications tyles */
 @import url('drawer.css');

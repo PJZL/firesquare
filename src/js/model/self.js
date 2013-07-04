@@ -16,9 +16,8 @@ define([
       //on desktop browser data is object type
       data = data.response.user;
     }
-
+    
     data.isAuth = true;
-
     _user.set(data);
   }
 

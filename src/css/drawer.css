@@ -1,6 +1,6 @@
 div[role="main"] {
-  background-color: lightblue;
-  height: -moz-calc(100% - 5rem); 
+  background-color: white;
+  min-height: -moz-calc(100% - 5rem); 
   overflow: hidden;
 }
 
