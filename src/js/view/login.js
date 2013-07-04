@@ -41,6 +41,7 @@ define([
       self.on('change:isAuth', _selfAuth);
       service.foursquare.set('access_token', access_token);
       _remove();
+      $('body').html(_.template(spinnerTemplate, {message: 'Logging in ...'}));
     }
     _window.close();
   }
@@ -57,12 +58,11 @@ define([
     $('.login').on('click', _login);
     $('.exit').on('click', _exit);
     $(window).off('message', _message);
-    $('body').html(_.template(spinnerTemplate, {message: 'Logging in ...'}));
   }
 
   function _exit() {
     _remove();
-    _window.close();
+    window.close();
   }
 
   return Backbone.View.extend({
