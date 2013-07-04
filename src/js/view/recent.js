@@ -6,7 +6,8 @@ define([
 ], function (template, checkinTemplate, Drawer, Recent){
 
   var _drawer,
-    _recent;
+    _recent,
+    _fetch;
 
   function _initialize () {
     _drawer = new Drawer(_remove);
@@ -15,7 +16,7 @@ define([
 
     recent = new Recent();
     recent.on('add', _add);
-    recent.fetch();
+    _fetch = recent.fetch();
   }
 
   function _add(checkin) {
@@ -23,6 +24,10 @@ define([
   }
 
   function _remove () {
+    if (_fetch !== undefined &&
+        typeof(_fetch.abort) === 'function' ) {
+      _fetch.abort();
+    }
     recent.off('add', add);
   }
 
