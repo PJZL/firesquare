@@ -23,7 +23,8 @@ module.exports = function(grunt) {
           'define',
           'Backbone',
           'module',
-          '__dirname'
+          '__dirname',
+          '$'
         ]
       }
     }
