@@ -2,10 +2,13 @@ define([
   'text!template/drawer.html',
   'text!template/spinner.html',
   'model/self'
-], function (template, spinnerTemplate, self){
+], function (template, spinnerTemplate, self) {
+  'use strict';
 
   var _isLoaded = false,
-    _currentRemove;
+    _currentRemove,
+    _drawer,
+    _unloadView;
 
   function _initialize(remove) {
     if (!_isLoaded) {
@@ -17,15 +20,15 @@ define([
     _unloadView(remove);
   }
 
-  function _unloadView(remove) {
+  _unloadView = function(remove) {
     if (_currentRemove !== undefined &&
-        typeof(_currentRemove) === 'function') {
+        typeof _currentRemove === 'function') {
       _currentRemove();
     }
     _currentRemove = remove;
-  }
+  };
 
-  function _drawer(hide) {
+  _drawer = function(hide) {
 
     var region = document.querySelector("body > section");
 
@@ -36,9 +39,9 @@ define([
     }
 
     return false;
-  }
+  };
 
-  function _remove(){
+  function _remove() {
     if (_isLoaded) {
       _isLoaded = false;
       $('body').html(_.template(spinnerTemplate));
@@ -49,13 +52,14 @@ define([
     $('body[role="application"] section[role="region"] > header h1').html(title);
   }
 
-  function _setContent(content){
+  function _setContent(content) {
     $('div[role="main"]').html(content);
   }
 
   return Backbone.View.extend({
     initialize: _initialize,
     setTitle:   _setTitle,
-    setContent: _setContent
+    setContent: _setContent,
+    remove:     _remove
   });
 });

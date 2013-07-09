@@ -17,7 +17,6 @@ module.exports = function(grunt) {
         indent: 2,
         todo: true,
         nomen: true,
-        unused: true,
         predef: [
           '_',
           '$',
@@ -27,7 +26,7 @@ module.exports = function(grunt) {
           'Backbone',
           'module',
           '__dirname',
-          '$'
+          'document'
         ]
       }
     }

@@ -2,10 +2,12 @@ define([
   'model/checkin',
   'model/service'
 ], function (Checkin, service) {
+  'use strict';
+
   return Backbone.Collection.extend({
     model: Checkin,
-    parse: function(data){
-      if (typeof(data) === 'string') {
+    parse: function(data) {
+      if (typeof data === 'string') {
         return JSON.parse(data).response.recent;
       }
       return data.response.recent;
