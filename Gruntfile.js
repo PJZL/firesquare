@@ -17,8 +17,11 @@ module.exports = function(grunt) {
         indent: 2,
         todo: true,
         nomen: true,
+        unused: true,
         predef: [
-          'jQuery',
+          '_',
+          '$',
+          'window',
           'require',
           'define',
           'Backbone',

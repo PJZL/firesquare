@@ -10,13 +10,12 @@ define([
       '*actions': 'default'
     },
 
-    'default': function() {
-      var recent = new Recent();
+    recent: function() {
+      return new Recent();
     },
 
-    recent: function() {
-      var recent = new Recent();
+    'default': function() {
+      return this.recent();
     }
-
   });
 });
