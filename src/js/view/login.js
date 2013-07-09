@@ -5,36 +5,40 @@ define([
   'text!root/config.json',
   'model/service',
   'model/self'
-], function (Router, template, spinnerTemplate, config, service, self){
-
+], function (Router, template, spinnerTemplate, config, service, self) {
+  'use strict';
   var _window,
-    _router;
+    _router,
+    _initialize,
+    _message,
+    _exit,
+    _remove;
 
-  function _login(event){
+  function _login(event) {
     event.preventDefault();
 
     var conf = JSON.parse(config),
-        url = 'https://foursquare.com/oauth2/authenticate?'
-            + 'client_id='
-            + conf.services.foursquare.client_id
-            + '&response_type=token'
-            + '&redirect_uri='
-            + conf.services.foursquare.api_endpoint
-            + window.location.protocol + '/' + window.location.host;
+      url = 'https://foursquare.com/oauth2/authenticate?'
+          + 'client_id='
+          + conf.services.foursquare.client_id
+          + '&response_type=token'
+          + '&redirect_uri='
+          + conf.services.foursquare.api_endpoint
+          + window.location.protocol + '/' + window.location.host;
 
     _window = window.open(url);
   }
 
-  function _selfAuth(){
+  function _selfAuth() {
     if (!self.get('isAuth')) {
       _initialize();
     } else {
       _router = new Router();
-      Backbone.history.start();
+      Backbone.history.start(_router); //For jslint
     }
   }
 
-  function _message(event){
+  _message = function (event) {
     var access_token = event.originalEvent.data.access_token;
 
     if (access_token !== undefined) {
@@ -44,26 +48,25 @@ define([
       $('body').html(_.template(spinnerTemplate, {message: 'Logging in ...'}));
     }
     _window.close();
-  }
+  };
 
-  function _initialize(router) {
-    _router = router;
+  _initialize = function () {
     $('body').html(_.template(template));
     $(window).on('message', _message);
     $('.login').on('click', _login);
     $('.exit').on('click', _exit);
-  }
+  };
 
-  function _remove(){
+  _remove = function () {
     $('.login').on('click', _login);
     $('.exit').on('click', _exit);
     $(window).off('message', _message);
-  }
+  };
 
-  function _exit() {
+  _exit = function () {
     _remove();
     window.close();
-  }
+  };
 
   return Backbone.View.extend({
     initialize: _initialize

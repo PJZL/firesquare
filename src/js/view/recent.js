@@ -3,14 +3,17 @@ define([
   'text!template/checkin.html',
   'view/drawer',
   'collection/recent'
-], function (template, checkinTemplate, Drawer, Recent){
-
+], function (template, checkinTemplate, Drawer, Recent) {
+  'use strict';
   var _drawer,
     _recent,
     _fetch,
-    _maxIndex;
+    _maxIndex,
+    _remove,
+    _add,
+    _update;
 
-  function _initialize () {
+  function _initialize() {
     _maxIndex = 0;
     _drawer = new Drawer(_remove);
     _drawer.setTitle('Recent checkins');
@@ -23,24 +26,24 @@ define([
     $('.update').on('click', _update);
   }
 
-  function _update(){
+  _update = function () {
 
-    function _success(){
+    function _success() {
       $('p[role="status"]').hide('fast');
     }
 
-    function _error(){
+    function _error() {
       var _text = $('p[role="status"] > span').text();
       $('p[role="status"] > span').text('Update failed!');
-      $('p[role="status"]').hide('slow', function(){
-         $('p[role="status"] > span').text(_text);
+      $('p[role="status"]').hide('slow', function () {
+        $('p[role="status"] > span').text(_text);
       });
     }
 
     $('div[role="main"]').scrollTop(0);
-    $('p[role="status"]').show('fast', function(){
+    $('p[role="status"]').show('fast', function () {
       if (_fetch !== undefined &&
-          typeof(_fetch.abort) === 'function' ) {
+          typeof (_fetch.abort) === 'function') {
         _fetch.abort();
       }
       _fetch = _recent.fetch({
@@ -48,10 +51,9 @@ define([
         error: _error
       });
     });
-    
-  }
+  };
 
-  function _add(checkin) {
+  _add = function (checkin) {
     var _currentIndex = parseInt(checkin.get('createdAt'), 10);
 
     if (_maxIndex < _currentIndex) {
@@ -60,15 +62,15 @@ define([
     } else {
       $('.recent').append(_.template(checkinTemplate, checkin));
     }
-  }
+  };
 
-  function _remove () {
+  _remove = function () {
     if (_fetch !== undefined &&
-        typeof(_fetch.abort) === 'function' ) {
+        typeof (_fetch.abort) === 'function') {
       _fetch.abort();
     }
     _recent.off('add', _add);
-  }
+  };
 
   return Backbone.View.extend({
     initialize: _initialize,
