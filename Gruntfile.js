@@ -95,6 +95,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', 'Default build',
     [
       'jslint',
+      'clean',
       'requirejs',
       'copy',
       'compress'
