@@ -5,6 +5,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('src/manifest.webapp'),
@@ -53,7 +54,19 @@ module.exports = function(grunt) {
               'manifest.webapp',
               'css/**',
               'ico/**',
-              'components/**'
+              'components/backbone/backbone-min.js',
+              'components/underscore/underscore-min.js',
+              'components/jquery/jquery.min.js',
+              'components/requirejs/require.js',
+              'components/gaia-bb/menus_dialogs/confirm.css',
+              'components/gaia-bb/menus_dialogs/confirm/images/**',
+              'components/gaia-bb/widgets/progress_activity/**',
+              'components/gaia-bb/widgets/drawer/**',
+              'components/gaia-bb/widgets/headers.css',
+              'components/gaia-bb/widgets/headers/images/**',
+              'components/gaia-bb/widgets/lists/**',
+              'components/gaia-bb/widgets/toolbars.css',
+              'components/gaia-bb/widgets/toolbars/images/**'
             ],
             cwd: 'src/',
             dest: 'dist/<%= pkg.version %>'
@@ -70,6 +83,11 @@ module.exports = function(grunt) {
         cwd: 'dist/<%= pkg.version %>/',
         src: ['**'],
         dest: ''
+      }
+    },
+    clean: {
+      'default': {
+        src: ['dist/<%= pkg.version %>/']
       }
     }
   });
