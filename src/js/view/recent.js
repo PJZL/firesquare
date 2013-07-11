@@ -8,13 +8,11 @@ define([
   var _drawer,
     _recent,
     _fetch,
-    _maxIndex,
     _remove,
     _add,
     _update;
 
   function _initialize() {
-    _maxIndex = 0;
     _drawer = new Drawer(_remove);
     _drawer.setTitle('Recent checkins');
     _drawer.setContent(_.template(template));
@@ -54,12 +52,17 @@ define([
   };
 
   _add = function (checkin) {
-    var _currentIndex = parseInt(checkin.get('createdAt'), 10);
 
-    if (_maxIndex < _currentIndex) {
-      _maxIndex = _currentIndex;
-      $('.recent').prepend(_.template(checkinTemplate, checkin));
-    } else {
+    //check before each element should be put new element.
+    $('.recent li').each(function() {
+      if (parseInt($(this).attr('created-at'), 10) < parseInt(checkin.get('createdAt'), 10)) {
+        $(this).before(_.template(checkinTemplate, checkin));
+        return;
+      }
+    });
+
+    //if element is not yet in DOM it should be put at the end of the list
+    if ($('.recent li[created-at="10"]').get(0) === undefined) {
       $('.recent').append(_.template(checkinTemplate, checkin));
     }
   };
