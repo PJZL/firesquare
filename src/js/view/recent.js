@@ -55,7 +55,8 @@ define([
 
     //check before each element should be put new element.
     $('.recent li').each(function() {
-      if (parseInt($(this).attr('created-at'), 10) < parseInt(checkin.get('createdAt'), 10)) {
+      if ($('.recent li[created-at="10"]').get(0) === undefined &&
+          parseInt($(this).attr('created-at'), 10) < parseInt(checkin.get('createdAt'), 10)) {
         $(this).before(_.template(checkinTemplate, checkin));
         return;
       }
