@@ -1,0 +1,19 @@
+/* Import gaia building blocks */
+@import url('../components/gaia-bb/menus_dialogs/confirm.css');
+@import url('../components/gaia-bb/widgets/progress_activity/style.css');
+@import url('../components/gaia-bb/widgets/drawer/style.css');
+@import url('../components/gaia-bb/widgets/headers.css');
+@import url('../components/gaia-bb/widgets/lists/style.css');
+@import url('../components/gaia-bb/widgets/toolbars.css');
+
+/* Import applications tyles */
+@import url('drawer.css');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+  background-color: #fff;
+  height: 100%;
+  overflow-x: hidden;
+}

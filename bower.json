@@ -1,0 +1,10 @@
+{
+  "name": "FireSquare",
+  "dependencies": {
+    "jquery": "~2.0.2",
+    "gaia-bb": "git://github.com/mozilla-b2g/Gaia-UI-Building-Blocks.git",
+    "requirejs": "2.1.5",
+    "backbone": "~1.0.0",
+    "underscore": "~1.4.4"
+  }
+}

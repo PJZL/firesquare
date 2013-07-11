@@ -1,0 +1,9 @@
+div[role="main"] {
+  background-color: white;
+  height: -moz-calc(100% - 5rem); 
+  overflow-y: auto;
+}
+
+section[role="region"]{
+  height: 100%;
+}

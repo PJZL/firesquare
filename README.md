@@ -1,4 +1,9 @@
 firesquare
 ==========
 
-FourSquare client for Firefox OS
+FourSquare for Firefox OS
+
+=== Installing dependencies: ===
+
+* 'npm install'
+* 'bower install'
