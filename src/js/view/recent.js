@@ -51,6 +51,14 @@ define([
     });
   };
 
+  function _showVenue(element) {
+    console.log(
+      new _recent.get(
+        $(element.currentTarget).attr('id')
+      )
+    );
+  }
+
   _add = function (checkin) {
 
     //check before each element should be put new element.
@@ -65,6 +73,10 @@ define([
     if ($('.recent li[created-at="10"]').get(0) === undefined) {
       $('.recent').append(_.template(checkinTemplate, checkin));
     }
+
+    //Add on click event
+    $('.recent li').off('click', _showVenue);
+    $('.recent li').on('click', _showVenue);
   };
 
   _remove = function () {
