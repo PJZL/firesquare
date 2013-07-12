@@ -1,16 +1,15 @@
 define([
-  'text!template/checkinSummary.html',
-  'view/drawer',
-], function(template, Drawer) {
+  'text!template/checkinSummary.html'
+], function(template) {
   'use strict';
 
   var _drawer;
 
-  function _initialize(notifications) {
+  function _initialize(notifications, drawer) {
     var i,
       notif = {};
 
-    _drawer = new Drawer();
+    _drawer = drawer;
     _drawer.setWindow('Checkin summary');
 
     $('section header a').last().on('click', _remove);

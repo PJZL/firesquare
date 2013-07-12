@@ -22,7 +22,7 @@ define([
         data: {
           venueId:      this.get('id'),
           oauth_token:  service.foursquare.get('access_token'),
-          shout:        'Nie ma mnie tu! - to tylko test!'
+          //shout:        'Nie ma mnie tu! - to tylko test!'
         },
         success: success,
         error: error,

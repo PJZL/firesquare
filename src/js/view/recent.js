@@ -58,7 +58,7 @@ define([
     return new Venue(
       new VenueModel(
         _recent.get($(element.currentTarget).attr('id')).get('venue')
-      )
+      ), _drawer
     );
   }
 
