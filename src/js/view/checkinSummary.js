@@ -15,8 +15,6 @@ define([
 
     $('section header a').last().on('click', _remove);
 
-    
-
     for (i = 0; i < notifications.length; i+=1) {
       if (notifications[i].type === 'message' ||
           notifications[i].type === 'insights') {
@@ -24,7 +22,9 @@ define([
       }
     }
 
-    console.log(notif);
+    if (notif.insights === undefined) {
+      notif.insights = undefined;
+    }
 
     $('section div[role="main"]').last().html(_.template(template, notif));
   }

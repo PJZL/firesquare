@@ -11,6 +11,7 @@
   ">
     <%= message.item.message %>
   </h1>
+  <% if (insights !== undefined) { %>
   <ul>
     <% for(var i = 0; i < insights.item.insights.count; i += 1) { %>
     <li data-state="new">
@@ -32,4 +33,5 @@
     </li>
     <% } %>
   </ul>
+  <% } %>
 </article>
