@@ -7,3 +7,12 @@ div[role="main"] {
 section[role="region"]{
   height: 100%;
 }
+
+body[role="application"] > section[role="region"] {
+  position: fixed;
+}
+
+body[role="application"] section[role="region"][data-state="right"] {
+  transform: translateX(100%);
+  animation: 0.4s ease 0s normal forwards 1 currentToRight;
+}

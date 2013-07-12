@@ -1,0 +1,35 @@
+<article style="padding: 1rem;">
+  <h1 style="
+    background-color: #F5F5F5;
+    border: 1px solid #E8E8E8;
+    color: #666666;
+    font-family: 'Open Sans',Sans-serif;
+    font-size: 1.8rem;
+    font-weight: lighter;
+    margin: 10px 0;
+    padding: 0.4rem 0.4rem 0.4rem 3rem;
+  ">
+    <%= message.item.message %>
+  </h1>
+  <ul>
+    <% for(var i = 0; i < insights.item.insights.count; i += 1) { %>
+    <li data-state="new">
+      <a>
+        <em class="aside" style="
+            background: url('<%= insights.item.insights.items[0].points.image.prefix + insights.item.insights.items[0].points.image.sizes[0] + insights.item.insights.items[0].points.image.name %>') no-repeat center center transparent;
+          ">
+        </em>
+        <dl>
+          <dt>
+            <%= insights.item.insights.items[0].points.message %>
+          </dt>
+          <dd>
+            <time>+<%= insights.item.insights.items[0].points.points %></time>
+            <span>points</span>
+          </dd>
+        </dl>
+      </a>
+    </li>
+    <% } %>
+  </ul>
+</article>

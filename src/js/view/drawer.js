@@ -1,8 +1,9 @@
 define([
   'text!template/drawer.html',
   'text!template/spinner.html',
+  'text!template/drawerWindow.html',
   'model/self'
-], function (template, spinnerTemplate, self) {
+], function (template, spinnerTemplate, drawerWindowTemplate, self) {
   'use strict';
 
   var _isLoaded = false,
@@ -53,13 +54,25 @@ define([
   }
 
   function _setContent(content) {
-    $('div[role="main"]').html(content);
+    $('section div[role="main"]').first().html(content);
+  }
+
+  function _setWindow(title) {
+    $('body').append(_.template(drawerWindowTemplate, {title: title}));
+    $('section[role="region"]').last().removeAttr('data-state');
+  }
+
+  function _removeWindow(){
+    $('section[role="region"]').last().attr('data-state', 'right');
+    $('section[role="region"]').last().remove();
   }
 
   return Backbone.View.extend({
-    initialize: _initialize,
-    setTitle:   _setTitle,
-    setContent: _setContent,
-    remove:     _remove
+    initialize:   _initialize,
+    setTitle:     _setTitle,
+    setContent:   _setContent,
+    remove:       _remove,
+    setWindow:    _setWindow,
+    removeWindow: _removeWindow
   });
 });

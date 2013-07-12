@@ -45,7 +45,7 @@ define([
       self.on('change:isAuth', _selfAuth);
       service.foursquare.set('access_token', access_token);
       _remove();
-      $('body').html(_.template(spinnerTemplate, {message: 'Logging in ...'}));
+      $('body').html(_.template(spinnerTemplate, {message: 'Logging in ...', button1: undefined, button2: undefined}));
     }
     _window.close();
   };

@@ -2,8 +2,10 @@ define([
   'text!template/recent.html',
   'text!template/checkin.html',
   'view/drawer',
-  'collection/recent'
-], function (template, checkinTemplate, Drawer, Recent) {
+  'view/venue',
+  'collection/recent',
+  'model/venue'
+], function (template, checkinTemplate, Drawer, Venue, Recent, VenueModel) {
   'use strict';
   var _drawer,
     _recent,
@@ -52,9 +54,10 @@ define([
   };
 
   function _showVenue(element) {
-    console.log(
-      new _recent.get(
-        $(element.currentTarget).attr('id')
+    
+    return new Venue(
+      new VenueModel(
+        _recent.get($(element.currentTarget).attr('id')).get('venue')
       )
     );
   }
@@ -63,7 +66,8 @@ define([
 
     //check before each element should be put new element.
     $('.recent li').each(function() {
-      if (parseInt($(this).attr('created-at'), 10) < parseInt(checkin.get('createdAt'), 10)) {
+      if ($('.recent li[created-at="10"]').get(0) === undefined &&
+          parseInt($(this).attr('created-at'), 10) < parseInt(checkin.get('createdAt'), 10)) {
         $(this).before(_.template(checkinTemplate, checkin));
         return;
       }
