@@ -32,12 +32,11 @@ define([
 
     var region = document.querySelector("body > section");
 
-    if (region.getAttribute("data-state") === "drawer") {
-      region.setAttribute("data-state", "none");
-    } else if (hide !== true) {
-      region.setAttribute("data-state", "drawer");
+    if (region.dataset.state === 'drawer') {
+      region.dataset.state = 'none';
+    } else if (true !== hide) {
+      region.dataset.state = 'drawer';
     }
-
     return false;
   };
 
