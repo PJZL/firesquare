@@ -28,7 +28,8 @@ define([
     $('section div[role="main"]').last().html(_.template(template, notif));
   }
 
-  function _remove() {
+  function _remove(event) {
+    event.preventDefault();
     _drawer.removeWindow();
   }
 

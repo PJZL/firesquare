@@ -3,9 +3,10 @@ define([
   'text!template/checkin.html',
   'view/drawer',
   'view/venue',
+  'view/searchVenue',
   'collection/recent',
   'model/venue'
-], function (template, checkinTemplate, Drawer, Venue, Recent, VenueModel) {
+], function (template, checkinTemplate, Drawer, Venue, SearchVenue, Recent, VenueModel) {
   'use strict';
   var _drawer,
     _recent,
@@ -13,6 +14,11 @@ define([
     _remove,
     _add,
     _update;
+
+  function _searchVenue(event) {
+    event.preventDefault();
+    return new SearchVenue(_drawer);
+  }
 
   function _initialize() {
     _drawer = new Drawer(_remove);
@@ -24,6 +30,8 @@ define([
     _fetch = _recent.fetch();
 
     $('.update').on('click', _update);
+    $('body > section > header').prepend('<menu type="toolbar"><a href="#"><span class="icon icon-add">add</span></a></menu>');
+    $('body > section > header > menu > a').on('click', _searchVenue);
   }
 
   _update = function () {
@@ -54,6 +62,7 @@ define([
   };
 
   function _showVenue(element) {
+    element.preventDefault();
     
     return new Venue(
       new VenueModel(
@@ -66,7 +75,7 @@ define([
 
     //check before each element should be put new element.
     $('.recent li').each(function() {
-      if ($('.recent li[created-at="10"]').get(0) === undefined &&
+      if ($('.recent li[created-at="' + parseInt(checkin.get('createdAt'), 10) + '"]').get(0) === undefined &&
           parseInt($(this).attr('created-at'), 10) < parseInt(checkin.get('createdAt'), 10)) {
         $(this).before(_.template(checkinTemplate, checkin));
         return;
@@ -89,6 +98,9 @@ define([
       _fetch.abort();
     }
     _recent.off('add', _add);
+    $('body > section > header > menu > a').off('click', _searchVenue);
+    $('body > section > header > menu').remove();
+    $('.recent li').off('click', _showVenue);
   };
 
   return Backbone.View.extend({
