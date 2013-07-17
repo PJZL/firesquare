@@ -1,26 +1,45 @@
 define([
   'text!template/searchVenue.html',
+  'text!template/searchVenueItem.html',
   'model/service'
-], function(template, service) {
+], function(template, itemTemplate, service) {
   'use strict';
 
   var _drawer,
     _position,
     _search;
 
-  //http://freegeoip.net/
+  function _itemClick() {
+    console.log(this);
+  }
+
   function _updateSearch() {
 
     function _callback(data) {
-      console.log(data);
+      $('ul.venues').empty();
+      var _data;
+      if (typeof data === 'string') {
+        _data = JSON.parse(data);
+      } else {
+        _data = data;
+      }
+      $(_data.response.groups[0].items).each(function(){
+        $('ul.venues').append(_.template(itemTemplate, this));
+      });
+      $('ul.venues > li').on('click', _itemClick);
     }
 
     if (_position !== undefined && 
         $('input').val() !== '') {
-      $.get(
-      'https://api.foursquare.com/v2/venues/search?ll=' + _position.latitude + ',' + _position.longitude + '&oauth_token=' + service.foursquare.get('access_token') + '&query=' + $('input').val(),
-      _callback
-    );
+      $('ul.venues > li').off('click', _itemClick);
+      $('ul.venues').html('<progress style="left: 50%; top: 50%; margin-left: -3.2rem; margin-top: 3.2rem; position: relative;"></progress>');
+      if (_search !== undefined) {
+        _search.abort();
+      }
+      _search = $.get(
+        'https://api.foursquare.com/v2/venues/search?ll=' + _position.latitude + ',' + _position.longitude + '&oauth_token=' + service.foursquare.get('access_token') + '&query=' + $('input').val(),
+        _callback
+      );
     }
   }
 
@@ -56,11 +75,9 @@ define([
 
   function _remove(event) {
     event.preventDefault();
-    if (_watch !== undefined) {
-      navigator.geolocation.clearWatch(_watch);
-    }
     _drawer.removeWindow();
     $('input').off('keyup', _updateSearch);
+    $('ul.venues > li').off('click', _itemClick);
   }
 
   return Backbone.View.extend({

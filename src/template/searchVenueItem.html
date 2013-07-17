@@ -1,0 +1,20 @@
+<li 
+id="<%= id %>"
+style="
+	margin-top: -3px;
+">
+	<% if (categories.length > 0) { %>
+		<img src="<%= categories[0].icon %>" style="
+			width: 32px;
+			height: 32px;
+			margin-right: 1rem;
+	    margin-top: 1rem;
+		">
+	<% } %>
+  <dl>
+    <dt><strong><%= name %></strong></dt>
+    <dd>
+      <span><%= location.city %>, <strong><%= location.address %></strong></span>
+    </dd>
+  </dl>
+</li>
