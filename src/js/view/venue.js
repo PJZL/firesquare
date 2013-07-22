@@ -13,6 +13,7 @@ define([
     _checkinPromise;
 
   function _refresh() {
+    $('body[role="application"] section[role="region"] > header h1').last().html(_venue.get('name'));
     $('section div[role="main"]').last().html(_.template(template, _venue));
     $('button.recommend').on('click', _checkin);
   }

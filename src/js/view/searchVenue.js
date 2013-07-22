@@ -1,16 +1,24 @@
 define([
   'text!template/searchVenue.html',
   'text!template/searchVenueItem.html',
-  'model/service'
-], function(template, itemTemplate, service) {
+  'model/service',
+  'model/venue',
+  'view/venue'
+], function(template, itemTemplate, service, VenueModel, VenueView) {
   'use strict';
 
   var _drawer,
     _position,
     _search;
 
-  function _itemClick() {
-    console.log(this);
+  function _itemClick(element) {
+    element.preventDefault();
+    
+    return new VenueView(
+      new VenueModel(
+        {id: $(element.currentTarget).attr('id')}
+      ), _drawer
+    );
   }
 
   function _updateSearch() {
