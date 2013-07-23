@@ -1,3 +1,8 @@
+/** 
+  This is main module.
+
+  @module App
+*/
 require.config({
   paths: {
     text: 'lib/text',
