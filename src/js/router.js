@@ -4,7 +4,7 @@ define([
   'use strict';
 
   /**
-    Router object that is extension of Backbone.Router.
+    Router object that is extension of [Backbone.Router](http://backbonejs.org/#Router).
 
     @class Router
     @extends Backbone.Router

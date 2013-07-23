@@ -11,7 +11,7 @@ define([
     _unloadView;
 
   /**
-    method is called when Drawer object is initialised, but DOM drawer is initialised only once.
+    Method is called when Drawer object is initialised, but DOM drawer is initialised only once.
 
     @method _initialize
     @for Drawer
@@ -30,7 +30,7 @@ define([
   }
 
   /**
-    method unloads current view by calling `_remove` function when set. After unloading old view, new `_remove` function is set.
+    Method unloads current view by calling `_remove` function when set. After unloading old view, new `_remove` function is set.
 
     @method _unloadView
     @for Drawer
@@ -47,11 +47,11 @@ define([
   };
 
   /**
-    method manages visibilty of left menu. When menu is visible it will be hidden. If menu is hidden it will became visible. If `hide` parameted is true menu will stay hidden.
+    Method manages visibilty of left menu. When menu is visible it will be hidden. If menu is hidden it will became visible. If `hide` parameted is true menu will stay hidden.
 
     @method _drawer
     @for Drawer
-    @param {bollean} hide when set, menu will remain hidden.
+    @param {boolean} hide when set, menu will remain hidden.
     @static
     @private
   */
@@ -69,7 +69,7 @@ define([
   };
 
   /**
-    method removes drower from DOM and shows spinner
+    Method removes drower from DOM and shows spinner.
 
     @method _remove
     @for Drawer
@@ -84,7 +84,7 @@ define([
   }
 
   /**
-    method sets title for header
+    Method sets title for header.
 
     @method _setTitle
     @for Drawer
@@ -97,7 +97,7 @@ define([
   }
 
   /**
-    method sets content
+    Method sets content.
 
     @method _setContent
     @for Drawer
@@ -110,7 +110,7 @@ define([
   }
 
   /**
-    Drawer view that is extension of Backbone.View.
+    Drawer view that is extension of [Backbone.View](http://backbonejs.org/#View).
 
     @class Drawer
     @namespace View
@@ -118,7 +118,7 @@ define([
   */
   return Backbone.View.extend({
     /**
-      method is called when new Drawer object is created. It points to {{#crossLink "Drawer/_initialize"}}{{/crossLink}} method.
+      Method is called when new Drawer object is created. It points to {{#crossLink "Drawer/_initialize"}}{{/crossLink}} method.
 
       @method initialize
       @for Drawer
@@ -126,21 +126,21 @@ define([
     */
     initialize: _initialize,
     /**
-      method points to {{#crossLink "Drawer/_setTitle"}}{{/crossLink}} method.
+      Method points to {{#crossLink "Drawer/_setTitle"}}{{/crossLink}} method.
 
       @method setTitle
       @for Drawer
     */
     setTitle: _setTitle,
     /**
-      method points to {{#crossLink "Drawer/_setContent"}}{{/crossLink}} method.
+      Method points to {{#crossLink "Drawer/_setContent"}}{{/crossLink}} method.
 
       @method setContent
       @for Drawer
     */
     setContent: _setContent,
     /**
-      method points to {{#crossLink "Drawer/_remove"}}{{/crossLink}} method.
+      Method points to {{#crossLink "Drawer/_remove"}}{{/crossLink}} method.
 
       @method remove
       @for Drawer

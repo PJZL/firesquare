@@ -4,7 +4,7 @@ define([
   'use strict';
 
   /**
-    Checkin model that is extension of Backbone.Model.
+    Checkin model that is extension of [Backbone.Model](http://backbonejs.org/#Model).
 
     @class Checkin
     @namespace Model
@@ -23,7 +23,7 @@ define([
     },
 
     /**
-      Overrides default model `parse` function. Data returned form foursquare API endpoint differs from backbone expectations.
+      Overrides default model `parse` function. Data returned from foursquare API endpoint differs from backbone expectations.
 
       @method parse
       @param {Object} data

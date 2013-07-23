@@ -5,7 +5,7 @@ define([
   'use strict';
 
   /**
-    Recent collection that is extension of Backbone.Collection.
+    Recent collection that is extension of [Backbone.Collection](http://backbonejs.org/#Collection).
 
     @class Recent
     @namespace Collection
@@ -22,7 +22,7 @@ define([
     model: Checkin,
 
     /**
-      Overrides default collection `parse` function. Data returned form foursquare API endpoint differs from backbone expectations.
+      Overrides default collection `parse` function. Data returned from foursquare API endpoint differs from backbone expectations.
 
       @method parse
       @param {Object} data On firefox OS this object occures as a string!

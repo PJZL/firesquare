@@ -110,7 +110,7 @@ define([
   };
 
   /**
-    Recent view that is extension of Backbone.View.
+    Recent view that is extension of [Backbone.View](http://backbonejs.org/#View).
 
     @class Recent
     @namespace View

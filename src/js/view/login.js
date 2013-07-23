@@ -119,7 +119,7 @@ define([
   };
 
   /**
-    Login view that is extension of Backbone.View.
+    Login view that is extension of [Backbone.View](http://backbonejs.org/#View).
 
     @class Login
     @namespace View

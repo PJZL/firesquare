@@ -4,7 +4,7 @@ define([
   'use strict';
 
   /**
-    User model that is extension of Backbone.Model.
+    User model that is extension of [Backbone.Model](http://backbonejs.org/#Model).
 
     @class User
     @namespace Model
