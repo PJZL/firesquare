@@ -6,6 +6,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-bg-shell');
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('src/manifest.webapp'),
@@ -89,6 +90,11 @@ module.exports = function(grunt) {
       'default': {
         src: ['dist/<%= pkg.version %>/']
       }
+    },
+    bgShell: {
+      bower: {
+        cmd: 'bower install'
+      }
     }
   });
 
@@ -97,6 +103,7 @@ module.exports = function(grunt) {
       'jslint',
       'clean',
       'requirejs',
+      'bgShell:bower',
       'copy',
       'compress'
     ]);
