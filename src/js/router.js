@@ -19,7 +19,6 @@ define([
     */
     routes: {
       'recent':   'recent',
-      'none':     'none',
       '*actions': 'default'
     },
 
@@ -38,7 +37,7 @@ define([
       @method default
     */
     'default': function() {
-      return this.recent();
+      this.navigate('recent', {trigger : true});
     }
   });
 });
