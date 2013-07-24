@@ -112,10 +112,10 @@ module.exports = function(grunt) {
   grunt.registerTask('default', 'Default build',
     [
       'jslint',
+      'bgShell:bower',
       'qunit',
       'clean',
       'requirejs',
-      'bgShell:bower',
       'copy',
       'compress'
     ]);

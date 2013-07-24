@@ -11,9 +11,8 @@ require.config({
 
 require([
   'tests/collection/recent'
-], function (recent) {
+], function () {
   'use strict';
 
-  recent.run();
   QUnit.start();
 });
