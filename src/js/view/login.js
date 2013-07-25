@@ -14,6 +14,15 @@ define([
     _exit,
     _remove;
 
+  /**
+    method is called when user clicks on `Login` button. Foursquare oauth window is open.
+
+    @method _login
+    @for Login
+    @param {Object} event
+    @static
+    @private
+  */
   function _login(event) {
     event.preventDefault();
 
@@ -29,6 +38,14 @@ define([
     _window = window.open(url);
   }
 
+  /**
+    method is called after login and first data fetch from foursquare.
+
+    @method _selfAuth
+    @for Login
+    @static
+    @private
+  */
   function _selfAuth() {
     if (!self.get('isAuth')) {
       _initialize();
@@ -38,6 +55,15 @@ define([
     }
   }
 
+  /**
+    method is called after response from oauth endpoint is recived.
+
+    @method _message
+    @for Login
+    @param {Object} event `window` on `message` event.
+    @static
+    @private
+  */
   _message = function (event) {
     var access_token = event.originalEvent.data.access_token;
 
@@ -50,6 +76,14 @@ define([
     _window.close();
   };
 
+  /**
+    method is called when Login object is initialised.
+
+    @method _initialize
+    @for Login
+    @static
+    @private
+  */
   _initialize = function () {
     $('body').html(_.template(template));
     $(window).on('message', _message);
@@ -57,18 +91,48 @@ define([
     $('.exit').on('click', _exit);
   };
 
+  /**
+    method removes Login from DOM and unbinds events.
+
+    @method _remove
+    @for Login
+    @static
+    @private
+  */
   _remove = function () {
     $('.login').on('click', _login);
     $('.exit').on('click', _exit);
     $(window).off('message', _message);
   };
 
+  /**
+    method is called when user clicks on `exit` button.
+
+    @method _exit
+    @for Login
+    @static
+    @private
+  */
   _exit = function () {
     _remove();
     window.close();
   };
 
+  /**
+    Login view that is extension of [Backbone.View](http://backbonejs.org/#View).
+
+    @class Login
+    @namespace View
+    @extends Backbone.View
+  */
   return Backbone.View.extend({
+     /**
+      method is called when new Drawer object is created. It points to {{#crossLink "Login/_initialize"}}{{/crossLink}} method.
+
+      @method initialize
+      @for Login
+      @constructor
+    */
     initialize: _initialize
   });
 });

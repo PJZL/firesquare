@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test Runner</title>
+  <link rel="stylesheet" href="../src/components/qunit/qunit/qunit.css" />
+</head>
+<body>
+  <div id="qunit"></div>
+  <script src="../src/components/qunit/qunit/qunit.js"></script>
+  <script src="../src/components/jquery/jquery.min.js"></script>
+  <script src="../src/components/underscore/underscore-min.js"></script>
+  <script src="../src/components/backbone/backbone-min.js"></script>
+  <script src="../src/components/jquery-mockjax/jquery.mockjax.js"></script>
+  <script src="../src/components/requirejs/require.js" data-main="tests.js"></script>
+  <script>
+    // Defer Qunit so RequireJS can work its magic and resolve all modules.
+    QUnit.config.autostart = false;
+  </script>
+</body>
+</html>

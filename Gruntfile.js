@@ -6,13 +6,16 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-bg-shell');
+  grunt.loadNpmTasks('grunt-contrib-qunit');
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('src/manifest.webapp'),
     jslint: {
       files: [
         'src/js/**/*.js',
-        '*.js'
+        '*.js',
+        'tests/**/*.js'
       ],
       exclude: [
         'src/js/lib/text.js'
@@ -30,7 +33,14 @@ module.exports = function(grunt) {
           'Backbone',
           'module',
           '__dirname',
-          'document'
+          'document',
+          'test',
+          'deepEqual',
+          'QUnit',
+          'ok',
+          'asyncTest',
+          'start',
+          'notDeepEqual'
         ]
       }
     },
@@ -89,12 +99,24 @@ module.exports = function(grunt) {
       'default': {
         src: ['dist/<%= pkg.version %>/']
       }
+    },
+    bgShell: {
+      bower: {
+        cmd: 'bower install'
+      }
+    },
+    qunit: {
+      'default': [
+        'tests/index.html'
+      ]
     }
   });
 
   grunt.registerTask('default', 'Default build',
     [
       'jslint',
+      'bgShell:bower',
+      'qunit',
       'clean',
       'requirejs',
       'copy',

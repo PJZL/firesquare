@@ -1,7 +1,7 @@
 {
   "services": {
     "foursquare": {
-      "client_id": "https://developer.foursquare.com/overview/auth",
+      "client_id": "ENTER YOUR ID",
       "api_endpoint": "http://jsendpoint.herokuapp.com/foursquare/"
     }
   }
