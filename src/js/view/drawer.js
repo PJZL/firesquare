@@ -63,13 +63,17 @@ define([
   }
 
   function _removeWindow(callback){
-    $('section[role="region"]').last().attr('data-state', 'right');
+    //$('section[role="region"]').last().attr('data-state', 'right');
     $('section[role="region"]').last().remove();
+    if (callback !== undefined &&
+        typeof callback === 'function') {
+      callback();
+    }
   }
 
   function _removeAllWindow(){
     _removeWindow(function(){
-      if($('section[role="region"]').length > 1) {
+      if($('section[role="region"]').length > 2) {
         _removeAllWindow();
       }
     });
