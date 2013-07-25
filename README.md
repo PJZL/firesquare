@@ -3,12 +3,12 @@ FireSquare
 
 Foursquare client for Firefox OS.
 ---------------------------------
-The aim of this project is to provide basic foursquare client application for Firefox OS.
+The aim of this project is to provide basic [foursquare](http://foursquare.com) client application for Firefox OS.
 
 Building project:
 -----------------------
 * Install [nodejs and NPM](http://nodejs.org/download).
-* Install dependencies `npm install`..
+* Install dependencies `npm install`.
 * Install Grunt `sudo npm install grunt-cli -g`.
 * Run grunt default task `grunt`.
 
