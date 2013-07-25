@@ -1,3 +1,5 @@
+![icon](/src/ico/128.png)
+
 FireSquare
 ==========
 
