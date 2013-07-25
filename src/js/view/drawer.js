@@ -62,9 +62,17 @@ define([
     $('section[role="region"]').last().removeAttr('data-state');
   }
 
-  function _removeWindow(){
+  function _removeWindow(callback){
     $('section[role="region"]').last().attr('data-state', 'right');
     $('section[role="region"]').last().remove();
+  }
+
+  function _removeAllWindow(){
+    _removeWindow(function(){
+      if($('section[role="region"]').length > 1) {
+        _removeAllWindow();
+      }
+    });
   }
 
   return Backbone.View.extend({
@@ -73,6 +81,7 @@ define([
     setContent:   _setContent,
     remove:       _remove,
     setWindow:    _setWindow,
-    removeWindow: _removeWindow
+    removeWindow: _removeWindow,
+    removeAllWindow: _removeAllWindow
   });
 });

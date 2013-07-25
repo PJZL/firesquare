@@ -30,7 +30,7 @@ define([
 
   function _remove(event) {
     event.preventDefault();
-    _drawer.removeWindow();
+    _drawer.removeAllWindow();
   }
 
   return Backbone.View.extend({
