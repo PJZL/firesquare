@@ -1,4 +1,4 @@
-![icon](/src/ico/128.png) FireSquare [![Build Status](https://travis-ci.org/PJZL/firesquare.png?branch=master)](https://travis-ci.org/PJZL/firesquare)
+![icon](/src/ico/32.png) FireSquare [![Build Status](https://travis-ci.org/PJZL/firesquare.png?branch=master)](https://travis-ci.org/PJZL/firesquare)
 ====================================
 
 Foursquare client for Firefox OS.
