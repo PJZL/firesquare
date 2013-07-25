@@ -12,7 +12,8 @@ require.config({
 
 require([
   'tests/collection/recent',
-  'tests/model/self'
+  'tests/model/self',
+  'tests/model/service'
 ], function () {
   'use strict';
 
