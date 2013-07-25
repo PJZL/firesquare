@@ -109,6 +109,9 @@ module.exports = function(grunt) {
       'default': [
         'tests/index.html'
       ]
+    },
+    phantomjs: {
+      timeout: 30000
     }
   });
 
