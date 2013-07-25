@@ -37,7 +37,7 @@ with plugins:
 * [grunt-contrib-copy](http://github.com/gruntjs/grunt-contrib-copy)
 * [grunt-contrib-compress](http://github.com/gruntjs/grunt-contrib-compress)
 * [grunt-contrib-clean](http://github.com/gruntjs/grunt-contrib-clean)
-* [grunt-contrib-qunit](http://github.com/gruntjs/grunt-contrib-qunit) for automated unit tests using [PhantomJS]().
+* [grunt-contrib-qunit](http://github.com/gruntjs/grunt-contrib-qunit) for automated unit tests using [PhantomJS](http://phantomjs.org/).
 * [grunt-bg-shell](http://github.com/rma4ok/grunt-bg-shell)
 * [expressjs](http://expressjs.com/) for standalone web server.
 * [bower](http://bower.io/) for managing used libraries.
