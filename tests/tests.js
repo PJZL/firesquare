@@ -5,12 +5,17 @@ require.config({
     view: '../src/js/view',
     model: '../src/js/model',
     collection: '../src/js/collection',
-    tests: '.'
+    tests: '.',
+    mock: './mock'
   }
 });
 
 require([
-  'tests/collection/recent'
+  'tests/collection/recent',
+  'tests/model/self',
+  'tests/model/service',
+  'tests/model/checkin',
+  'tests/model/user'
 ], function () {
   'use strict';
 
