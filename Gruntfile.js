@@ -39,7 +39,8 @@ module.exports = function(grunt) {
           'QUnit',
           'ok',
           'asyncTest',
-          'start'
+          'start',
+          'notDeepEqual'
         ]
       }
     },
