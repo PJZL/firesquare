@@ -3,7 +3,7 @@ define([
 ], function (Service) {
   'use strict';
 
-  module('Service');
+  module('model.service');
 
   test('module', function() {
     deepEqual(typeof Service, 'object', 'module is loaded');

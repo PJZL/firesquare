@@ -5,7 +5,7 @@ define([
 ], function (Self, Service, Mock) {
   'use strict';
 
-  module('Self');
+  module('model.self');
 
   test('module', function() {
     deepEqual(typeof Self, 'object', 'module is loaded');

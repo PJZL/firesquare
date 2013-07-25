@@ -4,7 +4,7 @@ define([
 ], function (Recent, Service) {
   'use strict';
 
-  module('Recent');
+  module('collection.recent');
 
   test('module', function() {
     var recent;
