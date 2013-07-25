@@ -1,7 +1,5 @@
-![icon](/src/ico/128.png)
-
-FireSquare
-==========
+![icon](/src/ico/128.png) FireSquare
+====================================
 
 Foursquare client for Firefox OS.
 ---------------------------------
