@@ -3,7 +3,7 @@
 
 Foursquare client for Firefox OS.
 ---------------------------------
-The aim of this project is to provide basic [foursquare](http://foursquare.com) client application for Firefox OS.
+The aim of this project is to provide basic [foursquare](http://foursquare.com) client application for [Firefox OS](http://www.mozilla.org/en-US/firefox/os/).
 
 Building project:
 -----------------------
@@ -15,7 +15,7 @@ Building project:
 Generating documentation:
 --------------------------
 * Install [nodejs and NPM](http://nodejs.org/download).
-* Install Yuidoc `sudo npm install yuidoc -g`.
+* Install [Yuidoc](http://yui.github.io/yuidoc/) `sudo npm install yuidoc -g`.
 * Run Yuidoc `yuidoc`.
 
 Used libraries:
