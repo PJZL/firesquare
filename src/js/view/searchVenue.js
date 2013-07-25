@@ -3,13 +3,17 @@ define([
   'text!template/searchVenueItem.html',
   'model/service',
   'model/venue',
+  'model/self',
+  'model/checkin',
   'view/venue'
-], function(template, itemTemplate, service, VenueModel, VenueView) {
+], function(template, itemTemplate, service, VenueModel, Self, Checkin, VenueView) {
   'use strict';
 
   var _drawer,
     _position,
     _search;
+
+  console.log(Self);
 
   function _itemClick(element) {
     element.preventDefault();
@@ -51,7 +55,20 @@ define([
     }
   }
 
-  function _getPosition() {
+  function _getPosition(){
+    var venue;
+    if (Self.get('checkins').items.length > 0) {
+      venue = Self.get('checkins').items[0].venue;
+      _position = {
+        latitude: venue.location.lat,
+        longitude: venue.location.lng
+      }
+    } else {
+      _getPositionFallback();
+    }
+  }
+
+  function _getPositionFallback() {
 
     function _callback(data){
       if (typeof data === 'string') {
