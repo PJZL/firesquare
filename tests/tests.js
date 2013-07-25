@@ -14,7 +14,8 @@ require([
   'tests/collection/recent',
   'tests/model/self',
   'tests/model/service',
-  'tests/model/checkin'
+  'tests/model/checkin',
+  'tests/model/user'
 ], function () {
   'use strict';
 
