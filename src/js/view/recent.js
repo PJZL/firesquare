@@ -38,9 +38,9 @@ define([
     _recent.on('add', _add);
     _fetch = _recent.fetch();
 
-    $('.update').on('click', _update);
-    $('body > section > header').prepend('<menu type="toolbar"><a href="#"><span class="icon icon-add">add</span></a></menu>');
-    $('body > section > header > menu > a').on('click', _searchVenue);
+    $('body > section > header').prepend('<menu type="toolbar"><a href="#"><span class="icon icon-update">add</span></a><a href="#"><span class="icon icon-search">add</span></a></menu>');
+    $('body > section > header > menu > a .icon-update').on('click', _update);
+    $('body > section > header > menu > a .icon-search').on('click', _searchVenue);
   }
 
   /**
@@ -51,7 +51,8 @@ define([
     @static
     @private
   */
-  _update = function () {
+  _update = function (event) {
+    event.preventDefault();
 
     function _success() {
       $('p[role="status"]').hide('fast');
