@@ -62,6 +62,7 @@ define([
         _fetch.abort();
       }
       _fetch = _recent.fetch({
+        remove: false,
         success: _success,
         error: _error
       });
