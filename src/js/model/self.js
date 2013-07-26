@@ -4,8 +4,24 @@ define([
 ], function(User, service) {
   'use strict';
 
+  /** 
+    Current user object. Is initialised unauthenticated. This object is returned when Self module is initialised.
+
+    @property _user
+    @type User
+    @private
+    @static
+  */
   var _user = new User({isAuth: false});
 
+  /**
+    Authentication method callback.
+
+    @method _authCallback
+    @for CurrentUser
+    @static
+    @private
+  */
   function _authCallback(data) {
 
     var _data;
@@ -22,6 +38,14 @@ define([
     _user.set(_data);
   }
 
+  /**
+    Authentication method called when foursquare service token changes.
+
+    @method _auth
+    @for CurrentUser
+    @static
+    @private
+  */
   function _auth() {
     $.get(
       'https://api.foursquare.com/v2/users/self?oauth_token=' + service.foursquare.get('access_token'),
@@ -29,7 +53,17 @@ define([
     );
   }
 
+  /*
+    Bind service on change event.
+  */
   service.foursquare.on('change:access_token', _auth);
 
+  /**
+    Current user object.
+
+    @class CurrentUser
+    @namespace Model
+    @static
+  */
   return _user;
 });

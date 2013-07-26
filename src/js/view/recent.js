@@ -20,6 +20,15 @@ define([
     return new SearchVenue(_drawer);
   }
 
+  /**
+    method is called when Login object is initialised.
+
+    @method _initialize
+    @namespace View
+    @for Recent
+    @static
+    @private
+  */
   function _initialize() {
     _drawer = new Drawer(_remove);
     _drawer.setTitle('Recent checkins');
@@ -34,6 +43,14 @@ define([
     $('body > section > header > menu > a').on('click', _searchVenue);
   }
 
+  /**
+    method is called when user click's on update button.
+
+    @method _update
+    @for Recent
+    @static
+    @private
+  */
   _update = function () {
 
     function _success() {
@@ -55,6 +72,7 @@ define([
         _fetch.abort();
       }
       _fetch = _recent.fetch({
+        remove: false,
         success: _success,
         error: _error
       });
@@ -71,6 +89,14 @@ define([
     );
   }
 
+  /**
+    method is called when new object is added to checkin's collection.
+
+    @method _add
+    @for Recent
+    @static
+    @private
+  */
   _add = function (checkin) {
 
     //check before each element should be put new element.
@@ -92,6 +118,14 @@ define([
     $('.recent li').on('click', _showVenue);
   };
 
+  /**
+    method removes Recent from DOM and unbinds events.
+
+    @method _remove
+    @for Recent
+    @static
+    @private
+  */
   _remove = function () {
     if (_fetch !== undefined &&
         typeof (_fetch.abort) === 'function') {
@@ -103,6 +137,13 @@ define([
     $('.recent li').off('click', _showVenue);
   };
 
+  /**
+    Recent view that is extension of [Backbone.View](http://backbonejs.org/#View).
+
+    @class Recent
+    @namespace View
+    @extends Backbone.View
+  */
   return Backbone.View.extend({
     initialize: _initialize,
     remove:     _remove
