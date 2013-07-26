@@ -13,8 +13,6 @@ define([
     _position,
     _search;
 
-  console.log(Self);
-
   function _itemClick(element) {
     element.preventDefault();
     

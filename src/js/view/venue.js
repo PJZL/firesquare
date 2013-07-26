@@ -78,7 +78,8 @@ define([
     //_success({});
   }
 
-  function _remove() {
+  function _remove(event) {
+    event.preventDefault();
     $('section header a').last().off('click', _remove);
     $('button.recommend').off('click', _checkin);
     if (_fetch !== undefined &&

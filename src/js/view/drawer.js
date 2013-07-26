@@ -8,6 +8,7 @@ define([
 
   var _isLoaded = false,
     _currentRemove,
+    _currentUpdate,
     _drawer,
     _unloadView;
 
@@ -20,14 +21,14 @@ define([
     @static
     @private
   */
-  function _initialize(remove) {
+  function _initialize(remove, update) {
     if (!_isLoaded) {
       _isLoaded = true;
       $('body').html(_.template(template, self));
       $('body > section > header > a').on('click', _drawer);
     }
 
-    _unloadView(remove);
+    _unloadView(remove, update);
   }
 
   /**
@@ -39,12 +40,13 @@ define([
     @static
     @private
   */
-  _unloadView = function(remove) {
+  _unloadView = function(remove, update) {
     if (_currentRemove !== undefined &&
         typeof _currentRemove === 'function') {
       _currentRemove();
     }
     _currentRemove = remove;
+    _currentUpdate = update;
   };
 
   /**
@@ -127,6 +129,9 @@ define([
     _removeWindow(function(){
       if($('section[role="region"]').length > 2) {
         _removeAllWindow();
+      } else if (_currentUpdate !== undefined &&
+          typeof _currentUpdate === 'function') {
+        _currentUpdate();
       }
     });
   }

@@ -30,7 +30,7 @@ define([
     @private
   */
   function _initialize() {
-    _drawer = new Drawer(_remove);
+    _drawer = new Drawer(_remove, _update);
     _drawer.setTitle('Recent checkins');
     _drawer.setContent(_.template(template));
 
@@ -109,7 +109,8 @@ define([
     });
 
     //if element is not yet in DOM it should be put at the end of the list
-    if ($('.recent li[created-at="10"]').get(0) === undefined) {
+    if ($('.recent li[created-at="' + parseInt(checkin.get('createdAt'), 10) + '"]').get(0) === undefined &&
+      parseInt($(this).attr('created-at'), 10) < parseInt(checkin.get('createdAt'), 10)) {
       $('.recent').append(_.template(checkinTemplate, checkin));
     }
 
