@@ -4,9 +4,8 @@ define([
   'model/service',
   'model/venue',
   'model/self',
-  'model/checkin',
   'view/venue'
-], function(template, itemTemplate, service, VenueModel, Self, Checkin, VenueView) {
+], function(template, itemTemplate, service, VenueModel, Self, VenueView) {
   'use strict';
 
   var _drawer,
@@ -15,11 +14,12 @@ define([
 
   function _itemClick(element) {
     element.preventDefault();
-    
+
     return new VenueView(
       new VenueModel(
         {id: $(element.currentTarget).attr('id')}
-      ), _drawer
+      ),
+      _drawer
     );
   }
 
@@ -33,13 +33,13 @@ define([
       } else {
         _data = data;
       }
-      $(_data.response.groups[0].items).each(function(){
+      $(_data.response.groups[0].items).each(function() {
         $('ul.venues').append(_.template(itemTemplate, this));
       });
       $('ul.venues > li').on('click', _itemClick);
     }
 
-    if (_position !== undefined && 
+    if (_position !== undefined &&
         $('input').val() !== '') {
       $('ul.venues > li').off('click', _itemClick);
       $('ul.venues').html('<progress style="left: 50%; top: 50%; margin-left: -3.2rem; margin-top: 3.2rem; position: relative;"></progress>');
@@ -53,29 +53,16 @@ define([
     }
   }
 
-  function _getPosition(){
-    var venue;
-    if (Self.get('checkins').items.length > 0) {
-      venue = Self.get('checkins').items[0].venue;
-      _position = {
-        latitude: venue.location.lat,
-        longitude: venue.location.lng
-      }
-    } else {
-      _getPositionFallback();
-    }
-  }
-
   function _getPositionFallback() {
 
-    function _callback(data){
+    function _callback(data) {
       if (typeof data === 'string') {
         _position = JSON.parse(data);
       } else {
         _position = data;
       }
       _updateSearch();
-    };
+    }
 
     $.get(
       'http://freegeoip.net/json/',
@@ -83,9 +70,27 @@ define([
     );
   }
 
+  function _getPosition() {
+    var venue;
+    if (Self.get('checkins').items.length > 0) {
+      venue = Self.get('checkins').items[0].venue;
+      _position = {
+        latitude: venue.location.lat,
+        longitude: venue.location.lng
+      };
+    } else {
+      _getPositionFallback();
+    }
+  }
+
+  function _remove(event) {
+    event.preventDefault();
+    _drawer.removeWindow();
+    $('input').off('keyup', _updateSearch);
+    $('ul.venues > li').off('click', _itemClick);
+  }
+
   function _initialize(drawer) {
-    var i,
-      notif = {};
 
     _drawer = drawer;
     _drawer.setWindow('Search venue');
@@ -94,13 +99,6 @@ define([
     $('section div[role="main"]').last().html(_.template(template));
     $('input').on('keyup', _updateSearch);
     _getPosition();
-  }
-
-  function _remove(event) {
-    event.preventDefault();
-    _drawer.removeWindow();
-    $('input').off('keyup', _updateSearch);
-    $('ul.venues > li').off('click', _itemClick);
   }
 
   return Backbone.View.extend({

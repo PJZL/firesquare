@@ -116,7 +116,7 @@ define([
     $('section[role="region"]').last().removeAttr('data-state');
   }
 
-  function _removeWindow(callback){
+  function _removeWindow(callback) {
     //$('section[role="region"]').last().attr('data-state', 'right');
     $('section[role="region"]').last().remove();
     if (callback !== undefined &&
@@ -125,9 +125,9 @@ define([
     }
   }
 
-  function _removeAllWindow(){
-    _removeWindow(function(){
-      if($('section[role="region"]').length > 2) {
+  function _removeAllWindow() {
+    _removeWindow(function() {
+      if ($('section[role="region"]').length > 2) {
         _removeAllWindow();
       } else if (_currentUpdate !== undefined &&
           typeof _currentUpdate === 'function') {

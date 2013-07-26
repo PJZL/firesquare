@@ -81,11 +81,12 @@ define([
 
   function _showVenue(element) {
     element.preventDefault();
-    
+
     return new Venue(
       new VenueModel(
         _recent.get($(element.currentTarget).attr('id')).get('venue')
-      ), _drawer
+      ),
+      _drawer
     );
   }
 
@@ -110,7 +111,7 @@ define([
 
     //if element is not yet in DOM it should be put at the end of the list
     if ($('.recent li[created-at="' + parseInt(checkin.get('createdAt'), 10) + '"]').get(0) === undefined &&
-      parseInt($(this).attr('created-at'), 10) < parseInt(checkin.get('createdAt'), 10)) {
+        parseInt($(this).attr('created-at'), 10) < parseInt(checkin.get('createdAt'), 10)) {
       $('.recent').append(_.template(checkinTemplate, checkin));
     }
 

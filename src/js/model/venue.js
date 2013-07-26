@@ -16,12 +16,12 @@ define([
       //when data is just data
       return data;
     },
-    checkin: function(success, error){
+    checkin: function(success, error) {
       return $.ajax({
         url: 'https://api.foursquare.com/v2/checkins/add',
         data: {
           venueId:      this.get('id'),
-          oauth_token:  service.foursquare.get('access_token'),
+          oauth_token:  service.foursquare.get('access_token')//,
           //shout:        'Nie ma mnie tu! - to tylko test!'
         },
         success: success,

@@ -5,6 +5,11 @@ define([
 
   var _drawer;
 
+  function _remove(event) {
+    event.preventDefault();
+    _drawer.removeAllWindow();
+  }
+
   function _initialize(notifications, drawer) {
     var i,
       notif = {};
@@ -14,7 +19,7 @@ define([
 
     $('section header a').last().on('click', _remove);
 
-    for (i = 0; i < notifications.length; i+=1) {
+    for (i = 0; i < notifications.length; i += 1) {
       if (notifications[i].type === 'message' ||
           notifications[i].type === 'insights') {
         notif[notifications[i].type] = notifications[i];
@@ -26,11 +31,6 @@ define([
     }
 
     $('section div[role="main"]').last().html(_.template(template, notif));
-  }
-
-  function _remove(event) {
-    event.preventDefault();
-    _drawer.removeAllWindow();
   }
 
   return Backbone.View.extend({
