@@ -111,11 +111,29 @@ define([
     $('section div[role="main"]').first().html(content);
   }
 
+  /**
+    Method sets new window with title and spinner.
+
+    @method _setWindow
+    @for Drawer
+    @param {String} title
+    @static
+    @private
+  */
   function _setWindow(title) {
     $('body').append(_.template(drawerWindowTemplate, {title: title}));
     $('section[role="region"]').last().removeAttr('data-state');
   }
 
+  /**
+    Method removes current window.
+
+    @method _removeWindow
+    @for Drawer
+    @param {function} callback
+    @static
+    @private
+  */
   function _removeWindow(callback) {
     //$('section[role="region"]').last().attr('data-state', 'right');
     $('section[role="region"]').last().remove();
@@ -125,6 +143,14 @@ define([
     }
   }
 
+  /**
+    Method removes all windows. Calls `update` on current view i avaliable.
+
+    @method _removeAllWindow
+    @for Drawer
+    @static
+    @private
+  */
   function _removeAllWindow() {
     _removeWindow(function() {
       if ($('section[role="region"]').length > 2) {
@@ -173,8 +199,26 @@ define([
       @for Drawer
     */
     remove: _remove,
-    setWindow:    _setWindow,
+    /**
+      Method points to {{#crossLink "Drawer/_setWindow"}}{{/crossLink}} method.
+
+      @method setWindow
+      @for Drawer
+    */
+    setWindow: _setWindow,
+    /**
+      Method points to {{#crossLink "Drawer/_removeWindow"}}{{/crossLink}} method.
+
+      @method removeWindow
+      @for Drawer
+    */
     removeWindow: _removeWindow,
+    /**
+      Method points to {{#crossLink "Drawer/_removeAllWindow"}}{{/crossLink}} method.
+
+      @method removeAllWindow
+      @for Drawer
+    */
     removeAllWindow: _removeAllWindow
   });
 });

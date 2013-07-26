@@ -10,7 +10,8 @@ define([
 
   var _drawer,
     _position,
-    _search;
+    _search,
+    _positionWatch;
 
   function _itemClick(element) {
     element.preventDefault();
@@ -72,15 +73,29 @@ define([
 
   function _getPosition() {
     var venue;
-    if (Self.get('checkins').items.length > 0) {
-      venue = Self.get('checkins').items[0].venue;
-      _position = {
-        latitude: venue.location.lat,
-        longitude: venue.location.lng
-      };
-    } else {
-      _getPositionFallback();
+    if (_position === undefined) {
+      if (Self.get('checkins').items.length > 0) {
+        venue = Self.get('checkins').items[0].venue;
+        _position = {
+          latitude: venue.location.lat,
+          longitude: venue.location.lng
+        };
+      } else {
+        _getPositionFallback();
+      }
     }
+  }
+
+  function _getGPSPosition() {
+
+    function _success(position) {
+      _position = position.coords;
+      console.log(_position);
+    }
+
+    if ("geolocation" in navigator) {
+      _positionWatch = navigator.geolocation.watchPosition(_success);
+    } 
   }
 
   function _remove(event) {
@@ -88,6 +103,9 @@ define([
     _drawer.removeWindow();
     $('input').off('keyup', _updateSearch);
     $('ul.venues > li').off('click', _itemClick);
+    if (_positionWatch !== undefined) {
+      navigator.geolocation.clearWatch(_positionWatch);
+    }
   }
 
   function _initialize(drawer) {
@@ -99,6 +117,7 @@ define([
     $('section div[role="main"]').last().html(_.template(template));
     $('input').on('keyup', _updateSearch);
     _getPosition();
+    _getGPSPosition();
   }
 
   return Backbone.View.extend({

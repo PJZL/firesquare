@@ -5,11 +5,27 @@ define([
 
   var _drawer;
 
+  /**
+    method removes Login from DOM and unbinds events.
+
+    @method _remove
+    @for CheckinSummary
+    @static
+    @private
+  */
   function _remove(event) {
     event.preventDefault();
     _drawer.removeAllWindow();
   }
 
+  /**
+    method is called when Login object is initialised.
+
+    @method _initialize
+    @for CheckinSummary
+    @static
+    @private
+  */
   function _initialize(notifications, drawer) {
     var i,
       notif = {};
@@ -33,6 +49,13 @@ define([
     $('section div[role="main"]').last().html(_.template(template, notif));
   }
 
+  /**
+    Checkin summary view that is extension of [Backbone.View](http://backbonejs.org/#View).
+
+    @class CheckinSummary
+    @namespace View
+    @extends Backbone.View
+  */
   return Backbone.View.extend({
     initialize: _initialize,
     remove:     _remove
