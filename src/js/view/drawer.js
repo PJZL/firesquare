@@ -19,6 +19,7 @@ define([
     @method _initialize
     @for Drawer
     @param {function} remove function that is called when current view is unloaded.
+    @param {function} update function that is called when current view needs to be updated.
     @static
     @private
   */
