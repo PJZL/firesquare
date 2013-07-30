@@ -1,7 +1,7 @@
 define([
   'model/self',
   'model/service',
-  'mock/foursquare.self'
+  'mock/foursquare.users.self'
 ], function (Self, Service, Mock) {
   'use strict';
 
