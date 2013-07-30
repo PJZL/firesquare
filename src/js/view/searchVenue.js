@@ -35,7 +35,7 @@ define([
   /**
     Method updates current user position from freegeoip.net.
 
-    @method _getPositionFallback
+    @method _updateSearch
     @for SearchVenue
     @static
     @private

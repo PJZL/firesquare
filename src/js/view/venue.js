@@ -121,8 +121,6 @@ define([
     }));
     _checkinPromise = _venue.checkin(_success, _error);
     $('button.button1').on('click', _abort);
-
-    //_success({});
   };
 
   /**
