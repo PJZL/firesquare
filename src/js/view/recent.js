@@ -21,7 +21,7 @@ define([
   }
 
   /**
-    method is called when Login object is initialised.
+    Method is called when Login object is initialised.
 
     @method _initialize
     @namespace View
@@ -44,15 +44,18 @@ define([
   }
 
   /**
-    method is called when user click's on update button.
+    Method is called when user click's on update button.
 
     @method _update
     @for Recent
+    @param {Object} event
     @static
     @private
   */
   _update = function (event) {
-    event.preventDefault();
+    if (event !== undefined) {
+      event.preventDefault();
+    }
 
     function _success() {
       $('p[role="status"]').hide('fast');
@@ -80,6 +83,15 @@ define([
     });
   };
 
+  /**
+    Method is called when user click's on venue.
+
+    @method _showVenue
+    @for Recent
+    @param {Object} event
+    @static
+    @private
+  */
   function _showVenue(element) {
     element.preventDefault();
 
@@ -92,10 +104,11 @@ define([
   }
 
   /**
-    method is called when new object is added to checkin's collection.
+    Method is called when new object is added to checkin's collection.
 
     @method _add
     @for Recent
+    @param {Object} checkin
     @static
     @private
   */
@@ -121,7 +134,7 @@ define([
   };
 
   /**
-    method removes Recent from DOM and unbinds events.
+    Method removes Recent from DOM and unbinds events.
 
     @method _remove
     @for Recent
@@ -147,7 +160,20 @@ define([
     @extends Backbone.View
   */
   return Backbone.View.extend({
+    /**
+      Method is called when new Recent object is created. It points to {{#crossLink "Recent/_initialize"}}{{/crossLink}} method.
+
+      @method initialize
+      @for Recent
+      @constructor
+    */
     initialize: _initialize,
-    remove:     _remove
+    /**
+      Method points to {{#crossLink "Drawer/_remove"}}{{/crossLink}} method.
+
+      @method remove
+      @for Recent
+    */
+    remove: _remove
   });
 });

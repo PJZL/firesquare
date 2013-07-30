@@ -13,6 +13,14 @@ define([
     _search,
     _positionWatch;
 
+  /**
+    Method opens venue after user click.
+
+    @method _itemClick
+    @for SearchVenue
+    @static
+    @private
+  */
   function _itemClick(element) {
     element.preventDefault();
 
@@ -24,6 +32,14 @@ define([
     );
   }
 
+  /**
+    Method updates current user position from freegeoip.net.
+
+    @method _getPositionFallback
+    @for SearchVenue
+    @static
+    @private
+  */
   function _updateSearch() {
 
     function _callback(data) {
@@ -54,6 +70,14 @@ define([
     }
   }
 
+  /**
+    Method updates current user position from freegeoip.net.
+
+    @method _getPositionFallback
+    @for SearchVenue
+    @static
+    @private
+  */
   function _getPositionFallback() {
 
     function _callback(data) {
@@ -71,6 +95,14 @@ define([
     );
   }
 
+  /**
+    Method updates current user position from last checkin if avaliable. If last checkin is not avaliable {{#crossLink "SearchVenue/_getPositionFallback"}}{{/crossLink}} is called.
+
+    @method _getGPSPosition
+    @for SearchVenue
+    @static
+    @private
+  */
   function _getPosition() {
     var venue;
     if (_position === undefined) {
@@ -86,28 +118,52 @@ define([
     }
   }
 
+  /**
+    Method updates current user position when window.navigator.goolocation is avaliable.
+
+    @method _getGPSPosition
+    @for SearchVenue
+    @static
+    @private
+  */
   function _getGPSPosition() {
 
     function _success(position) {
       _position = position.coords;
-      console.log(_position);
     }
 
-    if ("geolocation" in navigator) {
-      _positionWatch = navigator.geolocation.watchPosition(_success);
-    } 
+    if (window.navigator.geolocation !== undefined) {
+      _positionWatch = window.navigator.geolocation.watchPosition(_success);
+    }
   }
 
+  /**
+    Method removes SearchVenue from DOM and unbinds events.
+
+    @method _remove
+    @for SearchVenue
+    @static
+    @private
+  */
   function _remove(event) {
     event.preventDefault();
     _drawer.removeWindow();
     $('input').off('keyup', _updateSearch);
     $('ul.venues > li').off('click', _itemClick);
     if (_positionWatch !== undefined) {
-      navigator.geolocation.clearWatch(_positionWatch);
+      window.navigator.geolocation.clearWatch(_positionWatch);
     }
   }
 
+  /**
+    Method is called when SearchVenue object is initialised.
+
+    @method _initialize
+    @for SearchVenue
+    @param {Object} drawer object.
+    @static
+    @private
+  */
   function _initialize(drawer) {
 
     _drawer = drawer;
@@ -120,8 +176,28 @@ define([
     _getGPSPosition();
   }
 
+  /**
+    SearchVenue view that is extension of [Backbone.View](http://backbonejs.org/#View).
+
+    @class SearchVenue
+    @namespace View
+    @extends Backbone.View
+  */
   return Backbone.View.extend({
+    /**
+      Method is called when new SearchVenue object is created. It points to {{#crossLink "SearchVenue/_initialize"}}{{/crossLink}} method.
+
+      @method initialize
+      @for SearchVenue
+      @constructor
+    */
     initialize: _initialize,
-    remove:     _remove
+    /**
+      Method points to {{#crossLink "SearchVenue/_remove"}}{{/crossLink}} method.
+
+      @method remove
+      @for SearchVenue
+    */
+    remove: _remove
   });
 });

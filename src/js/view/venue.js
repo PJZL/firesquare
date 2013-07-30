@@ -12,12 +12,29 @@ define([
     _checkinPromise,
     _checkin;
 
+  /**
+    Method updates venue view when new data is loaded.
+
+    @method _refresh
+    @for Venue
+    @static
+    @private
+  */
   function _refresh() {
     $('body[role="application"] section[role="region"] > header h1').last().html(_venue.get('name'));
     $('section div[role="main"]').last().html(_.template(template, _venue));
     $('button.recommend').on('click', _checkin);
   }
 
+  /**
+    Method removes Venue from DOM and unbinds events.
+
+    @method _remove
+    @for Venue
+    @param {Object} event
+    @static
+    @private
+  */
   function _remove(event) {
     event.preventDefault();
     $('section header a').last().off('click', _remove);
@@ -33,6 +50,16 @@ define([
     _drawer.removeWindow();
   }
 
+  /**
+    Method is called when Venue object is initialised.
+
+    @method _initialize
+    @for Venue
+    @param {Object} venue object.
+    @param {Object} drawer object.
+    @static
+    @private
+  */
   function _initialize(venue, drawer) {
     _venue = venue;
     _drawer = drawer;
@@ -44,6 +71,14 @@ define([
     $('section header a').last().on('click', _remove);
   }
 
+  /**
+    Method is called when user click's on checkin button.
+
+    @method _checkin
+    @for Venue
+    @static
+    @private
+  */
   _checkin = function() {
 
     function _error(data) {
@@ -93,8 +128,28 @@ define([
     //_success({});
   };
 
+  /**
+    Venue view that is extension of [Backbone.View](http://backbonejs.org/#View).
+
+    @class Venue
+    @namespace View
+    @extends Backbone.View
+  */
   return Backbone.View.extend({
+    /**
+      Method is called when new SearchVenue object is created. It points to {{#crossLink "SearchVenue/_initialize"}}{{/crossLink}} method.
+
+      @method initialize
+      @for SearchVenue
+      @constructor
+    */
     initialize: _initialize,
+    /**
+      Method points to {{#crossLink "SearchVenue/_remove"}}{{/crossLink}} method.
+
+      @method remove
+      @for SearchVenue
+    */
     remove:     _remove
   });
 });
