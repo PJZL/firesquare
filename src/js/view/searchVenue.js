@@ -98,7 +98,7 @@ define([
   /**
     Method updates current user position from last checkin if avaliable. If last checkin is not avaliable {{#crossLink "SearchVenue/_getPositionFallback"}}{{/crossLink}} is called.
 
-    @method _getGPSPosition
+    @method _getPosition
     @for SearchVenue
     @static
     @private

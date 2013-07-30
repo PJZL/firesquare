@@ -22,19 +22,22 @@ define([
 
     @method _initialize
     @for CheckinSummary
+    @param {Array} notifications connected with this checkin
+    @param {Object} drawer
     @static
     @private
   */
   function _initialize(notifications, drawer) {
     var i,
-      notif = {};
+      notif = {},
+      notifLength = notifications.length;
 
     _drawer = drawer;
     _drawer.setWindow('Checkin summary', _remove);
 
     $('section header a').last().on('click', _drawer.removeAllWindow);
 
-    for (i = 0; i < notifications.length; i += 1) {
+    for (i = 0; i < notifLength; i += 1) {
       if (notifications[i].type === 'message' ||
           notifications[i].type === 'insights') {
         notif[notifications[i].type] = notifications[i];

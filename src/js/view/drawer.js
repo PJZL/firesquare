@@ -38,6 +38,7 @@ define([
     @method _unloadView
     @for Drawer
     @param {function} remove function that is called when current view is unloaded.
+    @param {function} update function that is called when current view needs to be updated.
     @static
     @private
   */
@@ -118,6 +119,7 @@ define([
     @method _setWindow
     @for Drawer
     @param {String} title
+    @param {function} remove that is called when window is removed.
     @static
     @private
   */
@@ -132,6 +134,7 @@ define([
 
     @method _removeWindow
     @for Drawer
+    @param {Object} event when funtion is called by user action.
     @param {function} callback
     @static
     @private
@@ -140,7 +143,10 @@ define([
     if (event !== undefined) {
       event.preventDefault();
     }
-    //$('section[role="region"]').last().attr('data-state', 'right');
+    /*
+      TODO: add windows animations
+      $('section[role="region"]').last().attr('data-state', 'right');
+    */
     if (_windowStack.length > 0) {
       _windowStack.pop()();
       $('section[role="region"]').last().remove();
@@ -156,6 +162,7 @@ define([
 
     @method _removeAllWindow
     @for Drawer
+    @param {Object} event when funtion is called by user action.
     @static
     @private
   */
