@@ -145,9 +145,7 @@ define([
     @static
     @private
   */
-  function _remove(event) {
-    event.preventDefault();
-    _drawer.removeWindow();
+  function _remove() {
     $('input').off('keyup', _updateSearch);
     $('ul.venues > li').off('click', _itemClick);
     if (_positionWatch !== undefined) {
@@ -167,9 +165,9 @@ define([
   function _initialize(drawer) {
 
     _drawer = drawer;
-    _drawer.setWindow('Search venue');
+    _drawer.setWindow('Search venue', _remove);
 
-    $('section header a').last().on('click', _remove);
+    $('section header a').last().on('click', _drawer.removeWindow);
     $('section div[role="main"]').last().html(_.template(template));
     $('input').on('keyup', _updateSearch);
     _getPosition();

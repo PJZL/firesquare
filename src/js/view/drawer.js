@@ -10,7 +10,8 @@ define([
     _currentRemove,
     _currentUpdate,
     _drawer,
-    _unloadView;
+    _unloadView,
+    _windowStack = [];
 
   /**
     Method is called when Drawer object is initialised, but DOM drawer is initialised only once.
@@ -120,9 +121,10 @@ define([
     @static
     @private
   */
-  function _setWindow(title) {
+  function _setWindow(title, remove) {
     $('body').append(_.template(drawerWindowTemplate, {title: title}));
     $('section[role="region"]').last().removeAttr('data-state');
+    _windowStack.push(remove);
   }
 
   /**
@@ -134,9 +136,15 @@ define([
     @static
     @private
   */
-  function _removeWindow(callback) {
+  function _removeWindow(event, callback) {
+    if (event !== undefined) {
+      event.preventDefault();
+    }
     //$('section[role="region"]').last().attr('data-state', 'right');
-    $('section[role="region"]').last().remove();
+    if (_windowStack.length > 0) {
+      _windowStack.pop()();
+      $('section[role="region"]').last().remove();
+    }
     if (callback !== undefined &&
         typeof callback === 'function') {
       callback();
@@ -151,8 +159,11 @@ define([
     @static
     @private
   */
-  function _removeAllWindow() {
-    _removeWindow(function() {
+  function _removeAllWindow(event) {
+    if (event !== undefined) {
+      event.preventDefault();
+    }
+    _removeWindow(undefined, function() {
       if ($('section[role="region"]').length > 2) {
         _removeAllWindow();
       } else if (_currentUpdate !== undefined &&

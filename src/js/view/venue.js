@@ -35,8 +35,8 @@ define([
     @static
     @private
   */
-  function _remove(event) {
-    event.preventDefault();
+  function _remove() {//event) {
+    //event.preventDefault();
     $('section header a').last().off('click', _remove);
     $('button.recommend').off('click', _checkin);
     if (_fetch !== undefined &&
@@ -47,7 +47,7 @@ define([
         typeof (_checkinPromise.abort) === 'function') {
       _checkinPromise.abort();
     }
-    _drawer.removeWindow();
+    //_drawer.removeWindow();
   }
 
   /**
@@ -63,12 +63,12 @@ define([
   function _initialize(venue, drawer) {
     _venue = venue;
     _drawer = drawer;
-    _drawer.setWindow(_venue.get('name'));
+    _drawer.setWindow(_venue.get('name'), _remove);
 
     _venue.on('change', _refresh);
     _fetch = _venue.fetch();
 
-    $('section header a').last().on('click', _remove);
+    $('section header a').last().on('click', _drawer.removeWindow);
   }
 
   /**

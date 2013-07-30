@@ -13,9 +13,8 @@ define([
     @static
     @private
   */
-  function _remove(event) {
-    event.preventDefault();
-    _drawer.removeAllWindow();
+  function _remove() {
+    return;
   }
 
   /**
@@ -31,9 +30,9 @@ define([
       notif = {};
 
     _drawer = drawer;
-    _drawer.setWindow('Checkin summary');
+    _drawer.setWindow('Checkin summary', _remove);
 
-    $('section header a').last().on('click', _remove);
+    $('section header a').last().on('click', _drawer.removeAllWindow);
 
     for (i = 0; i < notifications.length; i += 1) {
       if (notifications[i].type === 'message' ||
