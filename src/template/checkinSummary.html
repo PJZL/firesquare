@@ -17,15 +17,15 @@
     <li data-state="new">
       <a>
         <em class="aside" style="
-            background: url('<%= insights.item.insights.items[0].points.image.prefix + insights.item.insights.items[0].points.image.sizes[0] + insights.item.insights.items[0].points.image.name %>') no-repeat center center transparent;
+            background: url('<%= insights.item.insights.items[i].points.image.prefix + insights.item.insights.items[i].points.image.sizes[0] + insights.item.insights.items[i].points.image.name %>') no-repeat center center transparent;
           ">
         </em>
         <dl>
           <dt>
-            <%= insights.item.insights.items[0].points.message %>
+            <%= insights.item.insights.items[i].points.message %>
           </dt>
           <dd>
-            <time>+<%= insights.item.insights.items[0].points.points %></time>
+            <time>+<%= insights.item.insights.items[i].points.points %></time>
             <span>points</span>
           </dd>
         </dl>
