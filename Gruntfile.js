@@ -76,7 +76,11 @@ module.exports = function(grunt) {
               'components/gaia-bb/widgets/headers/images/**',
               'components/gaia-bb/widgets/lists/**',
               'components/gaia-bb/widgets/toolbars.css',
-              'components/gaia-bb/widgets/toolbars/images/**'
+              'components/gaia-bb/widgets/toolbars/images/**',
+              'components/gaia-bb/widgets/buttons.css',
+              'components/gaia-bb/widgets/buttons/images/**',
+              'components/gaia-bb/widgets/input_areas.css',
+              'components/gaia-bb/widgets/input_areas/images/**'
             ],
             cwd: 'src/',
             dest: 'dist/<%= pkg.version %>'
