@@ -1,8 +1,9 @@
 <form role="dialog" data-type="confirm">
   <section>
     <h1><%= message %></h1>
-      <!-- Note: inline style only for demo purposes -->
-    <p style="text-align: center;"><progress></progress></p>
+    <% if (details !== undefined) { %>
+      <p><%= details  %></p>
+    <% } %>
   </section>
   <menu>
     <% if (button1 !== undefined) { %>

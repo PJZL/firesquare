@@ -5,6 +5,10 @@
 @import url('../components/gaia-bb/widgets/headers.css');
 @import url('../components/gaia-bb/widgets/lists/style.css');
 @import url('../components/gaia-bb/widgets/toolbars.css');
+@import url('../components/gaia-bb/widgets/buttons.css');
+@import url('../components/gaia-bb/widgets/input_areas.css');
+
+@import url('lib/transitions.css');
 
 /* Import applications tyles */
 @import url('drawer.css');
@@ -16,4 +20,43 @@ html, body {
   background-color: #fff;
   height: 100%;
   overflow-x: hidden;
+}
+
+progress.centre {
+  left: 50%;
+  top: 50%;
+  margin-left: -3.2rem;
+  margin-top: -3.2rem;
+  position: relative;
+}
+
+progress.top {
+  margin-top: 3.2rem;
+}
+
+h1.checkinSummary {
+  background-color: #F5F5F5;
+  border: 1px solid #E8E8E8;
+  color: #666666;
+  font-family: 'Open Sans',Sans-serif;
+  font-size: 1.8rem;
+  font-weight: lighter;
+  margin: 10px 0;
+  padding: 0.4rem 0.4rem 0.4rem 3rem;
+}
+
+h2.venue {
+  background-color: #F5F5F5;
+  border: 0.1rem solid #E8E8E8;
+  color: #666666;
+  font-family: 'Open Sans',Sans-serif;
+  font-size: 1.8rem;
+  font-weight: lighter;
+  margin: -0.1rem 0 0;
+  padding: 0.4rem 0.4rem 0.4rem 3rem;
+}
+
+div.venueBg {
+  width: 100%;
+  height: 30rem;
 }

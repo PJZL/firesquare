@@ -15,7 +15,7 @@ define([
     _remove;
 
   /**
-    method is called when user clicks on `Login` button. Foursquare oauth window is open.
+    Method is called when user clicks on `Login` button. Foursquare oauth window is open.
 
     @method _login
     @for Login
@@ -39,7 +39,7 @@ define([
   }
 
   /**
-    method is called after login and first data fetch from foursquare.
+    Method is called after login and first data fetch from foursquare.
 
     @method _selfAuth
     @for Login
@@ -56,7 +56,7 @@ define([
   }
 
   /**
-    method is called after response from oauth endpoint is recived.
+    Method is called after response from oauth endpoint is recived.
 
     @method _message
     @for Login
@@ -71,13 +71,13 @@ define([
       self.on('change:isAuth', _selfAuth);
       service.foursquare.set('access_token', access_token);
       _remove();
-      $('body').html(_.template(spinnerTemplate, {message: 'Logging in ...'}));
+      $('body').html(_.template(spinnerTemplate, {message: 'Logging in ...', button1: undefined, button2: undefined}));
     }
     _window.close();
   };
 
   /**
-    method is called when Login object is initialised.
+    Method is called when Login object is initialised.
 
     @method _initialize
     @for Login
@@ -92,7 +92,7 @@ define([
   };
 
   /**
-    method removes Login from DOM and unbinds events.
+    Method removes Login from DOM and unbinds events.
 
     @method _remove
     @for Login
@@ -106,7 +106,7 @@ define([
   };
 
   /**
-    method is called when user clicks on `exit` button.
+    Method is called when user clicks on `exit` button.
 
     @method _exit
     @for Login
@@ -127,7 +127,7 @@ define([
   */
   return Backbone.View.extend({
      /**
-      method is called when new Drawer object is created. It points to {{#crossLink "Login/_initialize"}}{{/crossLink}} method.
+      Method is called when new Drawer object is created. It points to {{#crossLink "Login/_initialize"}}{{/crossLink}} method.
 
       @method initialize
       @for Login

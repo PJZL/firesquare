@@ -11,5 +11,10 @@
     "128": "/ico/128.png",
     "32": "/ico/32.png"
   },
-  "default_locale": "en"
+  "default_locale": "en",
+  "permissions": {
+    "geolocation": {
+      "description" : "Checking in user location."
+    }
+  }
 }

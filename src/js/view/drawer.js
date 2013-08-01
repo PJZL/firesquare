@@ -1,14 +1,17 @@
 define([
   'text!template/drawer.html',
   'text!template/spinner.html',
+  'text!template/drawerWindow.html',
   'model/self'
-], function (template, spinnerTemplate, self) {
+], function (template, spinnerTemplate, drawerWindowTemplate, self) {
   'use strict';
 
   var _isLoaded = false,
     _currentRemove,
+    _currentUpdate,
     _drawer,
-    _unloadView;
+    _unloadView,
+    _windowStack = [];
 
   /**
     Method is called when Drawer object is initialised, but DOM drawer is initialised only once.
@@ -16,17 +19,18 @@ define([
     @method _initialize
     @for Drawer
     @param {function} remove function that is called when current view is unloaded.
+    @param {function} update function that is called when current view needs to be updated.
     @static
     @private
   */
-  function _initialize(remove) {
+  function _initialize(remove, update) {
     if (!_isLoaded) {
       _isLoaded = true;
       $('body').html(_.template(template, self));
       $('body > section > header > a').on('click', _drawer);
     }
 
-    _unloadView(remove);
+    _unloadView(remove, update);
   }
 
   /**
@@ -35,15 +39,17 @@ define([
     @method _unloadView
     @for Drawer
     @param {function} remove function that is called when current view is unloaded.
+    @param {function} update function that is called when current view needs to be updated.
     @static
     @private
   */
-  _unloadView = function(remove) {
+  _unloadView = function(remove, update) {
     if (_currentRemove !== undefined &&
         typeof _currentRemove === 'function') {
       _currentRemove();
     }
     _currentRemove = remove;
+    _currentUpdate = update;
   };
 
   /**
@@ -105,7 +111,72 @@ define([
     @private
   */
   function _setContent(content) {
-    $('div[role="main"]').html(content);
+    $('section div[role="main"]').first().html(content);
+  }
+
+  /**
+    Method sets new window with title and spinner.
+
+    @method _setWindow
+    @for Drawer
+    @param {String} title
+    @param {function} remove that is called when window is removed.
+    @static
+    @private
+  */
+  function _setWindow(title, remove) {
+    $('body').append(_.template(drawerWindowTemplate, {title: title}));
+    $('section[role="region"]').last().removeAttr('data-state');
+    _windowStack.push(remove);
+  }
+
+  /**
+    Method removes current window.
+
+    @method _removeWindow
+    @for Drawer
+    @param {Object} event when funtion is called by user action.
+    @param {function} callback
+    @static
+    @private
+  */
+  function _removeWindow(event, callback) {
+    if (event !== undefined) {
+      event.preventDefault();
+    }
+    /*
+      TODO: add windows animations
+      $('section[role="region"]').last().attr('data-state', 'right');
+    */
+    if (_windowStack.length > 0) {
+      _windowStack.pop()();
+      $('section[role="region"]').last().remove();
+    }
+    if (typeof callback === 'function') {
+      callback();
+    }
+  }
+
+  /**
+    Method removes all windows. Calls `update` on current view i avaliable.
+
+    @method _removeAllWindow
+    @for Drawer
+    @param {Object} event when funtion is called by user action.
+    @static
+    @private
+  */
+  function _removeAllWindow(event) {
+    if (event !== undefined) {
+      event.preventDefault();
+    }
+    _removeWindow(undefined, function() {
+      if ($('section[role="region"]').length > 2) {
+        _removeAllWindow();
+      } else if (typeof _currentUpdate === 'function') {
+        _currentUpdate();
+      }
+    });
   }
 
   /**
@@ -144,6 +215,27 @@ define([
       @method remove
       @for Drawer
     */
-    remove: _remove
+    remove: _remove,
+    /**
+      Method points to {{#crossLink "Drawer/_setWindow"}}{{/crossLink}} method.
+
+      @method setWindow
+      @for Drawer
+    */
+    setWindow: _setWindow,
+    /**
+      Method points to {{#crossLink "Drawer/_removeWindow"}}{{/crossLink}} method.
+
+      @method removeWindow
+      @for Drawer
+    */
+    removeWindow: _removeWindow,
+    /**
+      Method points to {{#crossLink "Drawer/_removeAllWindow"}}{{/crossLink}} method.
+
+      @method removeAllWindow
+      @for Drawer
+    */
+    removeAllWindow: _removeAllWindow
   });
 });

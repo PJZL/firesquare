@@ -1,0 +1,30 @@
+<article style="padding: 1rem;">
+  <h1 class="checkinSummary">
+    <%= message.item.message %>
+  </h1>
+  <% if (insights !== undefined) { %>
+  <ul>
+    <%  var i,
+          count = insights.item.insights.count;
+        for(i = 0; i < count ; i += 1) { %>
+    <li data-state="new">
+      <a>
+        <em class="aside" style="
+            background: url('<%= insights.item.insights.items[i].points.image.prefix + insights.item.insights.items[i].points.image.sizes[0] + insights.item.insights.items[i].points.image.name %>') no-repeat center center transparent;
+          ">
+        </em>
+        <dl>
+          <dt>
+            <%= insights.item.insights.items[i].points.message %>
+          </dt>
+          <dd>
+            <time>+<%= insights.item.insights.items[i].points.points %></time>
+            <span>points</span>
+          </dd>
+        </dl>
+      </a>
+    </li>
+    <% } %>
+  </ul>
+  <% } %>
+</article>

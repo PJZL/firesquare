@@ -2,8 +2,11 @@ define([
   'text!template/recent.html',
   'text!template/checkin.html',
   'view/drawer',
-  'collection/recent'
-], function (template, checkinTemplate, Drawer, Recent) {
+  'view/venue',
+  'view/searchVenue',
+  'collection/recent',
+  'model/venue'
+], function (template, checkinTemplate, Drawer, Venue, SearchVenue, Recent, VenueModel) {
   'use strict';
   var _drawer,
     _recent,
@@ -12,8 +15,13 @@ define([
     _add,
     _update;
 
+  function _searchVenue(event) {
+    event.preventDefault();
+    return new SearchVenue(_drawer);
+  }
+
   /**
-    method is called when Login object is initialised.
+    Method is called when Login object is initialised.
 
     @method _initialize
     @namespace View
@@ -22,7 +30,7 @@ define([
     @private
   */
   function _initialize() {
-    _drawer = new Drawer(_remove);
+    _drawer = new Drawer(_remove, _update);
     _drawer.setTitle('Recent checkins');
     _drawer.setContent(_.template(template));
 
@@ -30,18 +38,24 @@ define([
     _recent.on('add', _add);
     _fetch = _recent.fetch();
 
-    $('.update').on('click', _update);
+    $('body > section > header').prepend('<menu type="toolbar"><a href="#"><span class="icon icon-update">add</span></a><a href="#"><span class="icon icon-search">add</span></a></menu>');
+    $('body > section > header > menu > a .icon-update').on('click', _update);
+    $('body > section > header > menu > a .icon-search').on('click', _searchVenue);
   }
 
   /**
-    method is called when user click's on update button.
+    Method is called when user click's on update button.
 
     @method _update
     @for Recent
+    @param {Object} event
     @static
     @private
   */
-  _update = function () {
+  _update = function (event) {
+    if (event !== undefined) {
+      event.preventDefault();
+    }
 
     function _success() {
       $('p[role="status"]').hide('fast');
@@ -70,10 +84,31 @@ define([
   };
 
   /**
-    method is called when new object is added to checkin's collection.
+    Method is called when user click's on venue.
+
+    @method _showVenue
+    @for Recent
+    @param {Object} event
+    @static
+    @private
+  */
+  function _showVenue(element) {
+    element.preventDefault();
+
+    return new Venue(
+      new VenueModel(
+        _recent.get($(element.currentTarget).attr('id')).get('venue')
+      ),
+      _drawer
+    );
+  }
+
+  /**
+    Method is called when new object is added to checkin's collection.
 
     @method _add
     @for Recent
+    @param {Object} checkin
     @static
     @private
   */
@@ -89,13 +124,17 @@ define([
     });
 
     //if element is not yet in DOM it should be put at the end of the list
-    if ($('.recent li[created-at="10"]').get(0) === undefined) {
+    if ($('.recent li[created-at="' + parseInt(checkin.get('createdAt'), 10) + '"]').get(0) === undefined) {
       $('.recent').append(_.template(checkinTemplate, checkin));
     }
+
+    //Add on click event
+    $('.recent li').off('click', _showVenue);
+    $('.recent li').on('click', _showVenue);
   };
 
   /**
-    method removes Recent from DOM and unbinds events.
+    Method removes Recent from DOM and unbinds events.
 
     @method _remove
     @for Recent
@@ -108,6 +147,9 @@ define([
       _fetch.abort();
     }
     _recent.off('add', _add);
+    $('body > section > header > menu > a').off('click', _searchVenue);
+    $('body > section > header > menu').remove();
+    $('.recent li').off('click', _showVenue);
   };
 
   /**
@@ -118,7 +160,20 @@ define([
     @extends Backbone.View
   */
   return Backbone.View.extend({
+    /**
+      Method is called when new Recent object is created. It points to {{#crossLink "Recent/_initialize"}}{{/crossLink}} method.
+
+      @method initialize
+      @for Recent
+      @constructor
+    */
     initialize: _initialize,
-    remove:     _remove
+    /**
+      Method points to {{#crossLink "Drawer/_remove"}}{{/crossLink}} method.
+
+      @method remove
+      @for Recent
+    */
+    remove: _remove
   });
 });

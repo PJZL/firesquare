@@ -1,0 +1,28 @@
+
+<% var photos = get('photos'),
+       location = get('location');
+   if (photos.count > 0 && 
+       photos.groups.length > 1 &&
+       photos.groups[1].count > 0) { %>
+  <div class="venueBg" style="
+    background: url('<%= photos.groups[1].items[0].url %>') no-repeat center center fixed;
+    background-size: cover;
+  ">
+  </div>
+<% } %>
+
+    <h2 class="venue">
+      <% if (location.address !== undefined) { %>
+        <%= location.address %>, 
+      <% } %>
+      <% if (location.city !== undefined) { %>
+        <%= location.city %>, 
+      <% } %>
+      <% if (location.country !== undefined) { %>
+        <%= location.country %>
+      <% } %>
+    </h2>
+
+<article style="padding: 1rem;">
+  <button class="recommend" style="margin-bottom: 0;">Checkin here</button>
+</article>
