@@ -21,3 +21,26 @@ html, body {
   height: 100%;
   overflow-x: hidden;
 }
+
+progress.centre {
+  left: 50%;
+  top: 50%;
+  margin-left: -3.2rem;
+  margin-top: -3.2rem;
+  position: relative;
+}
+
+progress.top {
+  margin-top: 3.2rem;
+}
+
+h1.checkinSummary {
+  background-color: #F5F5F5;
+  border: 1px solid #E8E8E8;
+  color: #666666;
+  font-family: 'Open Sans',Sans-serif;
+  font-size: 1.8rem;
+  font-weight: lighter;
+  margin: 10px 0;
+  padding: 0.4rem 0.4rem 0.4rem 3rem;
+}

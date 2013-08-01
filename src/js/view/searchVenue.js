@@ -59,7 +59,7 @@ define([
     if (_position !== undefined &&
         $('input').val() !== '') {
       $('ul.venues > li').off('click', _itemClick);
-      $('ul.venues').html('<progress style="left: 50%; top: 50%; margin-left: -3.2rem; margin-top: 3.2rem; position: relative;"></progress>');
+      $('ul.venues').html('<progress class="centre top"></progress>');
       if (_search !== undefined) {
         _search.abort();
       }
@@ -81,12 +81,15 @@ define([
   function _getPositionFallback() {
 
     function _callback(data) {
-      if (typeof data === 'string') {
-        _position = JSON.parse(data);
-      } else {
-        _position = data;
+      //Position could have already been updated from GPS.
+      if (_position === undefined) {
+        if (typeof data === 'string') {
+          _position = JSON.parse(data);
+        } else {
+          _position = data;
+        }
+        _updateSearch();
       }
-      _updateSearch();
     }
 
     $.get(

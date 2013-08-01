@@ -152,8 +152,7 @@ define([
       _windowStack.pop()();
       $('section[role="region"]').last().remove();
     }
-    if (callback !== undefined &&
-        typeof callback === 'function') {
+    if (typeof callback === 'function') {
       callback();
     }
   }
@@ -174,8 +173,7 @@ define([
     _removeWindow(undefined, function() {
       if ($('section[role="region"]').length > 2) {
         _removeAllWindow();
-      } else if (_currentUpdate !== undefined &&
-          typeof _currentUpdate === 'function') {
+      } else if (typeof _currentUpdate === 'function') {
         _currentUpdate();
       }
     });
