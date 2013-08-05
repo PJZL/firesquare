@@ -1,11 +1,10 @@
 define([
-  'router',
   'text!template/login.html',
   'text!template/spinner.html',
   'text!root/config.json',
   'model/service',
   'model/self'
-], function (Router, template, spinnerTemplate, config, service, self) {
+], function (template, spinnerTemplate, config, service, self) {
   'use strict';
   var _window,
     _router,
@@ -67,12 +66,18 @@ define([
   _message = function (event) {
     var access_token = event.originalEvent.data.access_token;
 
-    if (access_token !== undefined) {
+    /*if (access_token !== undefined) {
       self.on('change:isAuth', _selfAuth);
       service.foursquare.set('access_token', access_token);
       _remove();
       $('body').html(_.template(spinnerTemplate, {message: 'Logging in ...', button1: undefined, button2: undefined}));
+    }*/
+
+    if (access_token !== undefined) {
+      service.foursquare.set('access_token', access_token);
+      window.location.hash = '#logging';
     }
+
     _window.close();
   };
 
