@@ -11,7 +11,8 @@ define([
     _currentUpdate,
     _drawer,
     _unloadView,
-    _windowStack = [];
+    _windowStack = [],
+    _removeAllWindow;
 
   /**
     Method is called when Drawer object is initialised, but DOM drawer is initialised only once.
@@ -169,7 +170,7 @@ define([
     @static
     @private
   */
-  function _removeAllWindow(event) {
+  _removeAllWindow = function(event) {
     if (event !== undefined) {
       event.preventDefault();
     }
@@ -180,7 +181,7 @@ define([
         _currentUpdate();
       }
     });
-  }
+  };
 
   /**
     Drawer view that is extension of [Backbone.View](http://backbonejs.org/#View).
