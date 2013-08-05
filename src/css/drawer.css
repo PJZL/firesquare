@@ -25,3 +25,8 @@ section[role="region"] > header:first-child .icon-search {
   background: url("../components/gaia-bb/widgets/toolbars/images/icons/search.png") no-repeat scroll center center transparent;
   !background-image: url("../components/gaia-bb/widgets/toolbars/images/icons/search.png");
 }
+
+/* repair drawer list style overrided by list component */
+body[role="application"] > nav .inner > ul > li {
+  display: inline;
+}

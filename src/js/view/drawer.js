@@ -31,6 +31,8 @@ define([
     }
 
     _unloadView(remove, update);
+    //Hide drawer.
+    _drawer(true);
   }
 
   /**
@@ -44,6 +46,7 @@ define([
     @private
   */
   _unloadView = function(remove, update) {
+    _removeAllWindow();
     if (_currentRemove !== undefined &&
         typeof _currentRemove === 'function') {
       _currentRemove();
@@ -171,7 +174,7 @@ define([
       event.preventDefault();
     }
     _removeWindow(undefined, function() {
-      if ($('section[role="region"]').length > 2) {
+      if ($('section[role="region"][drawer=window]').length > 0) {
         _removeAllWindow();
       } else if (typeof _currentUpdate === 'function') {
         _currentUpdate();

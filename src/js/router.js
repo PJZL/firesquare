@@ -1,6 +1,7 @@
 define([
-  'view/recent'
-], function (Recent) {
+  'view/recent',
+  'view/searchVenue'
+], function (Recent, SearchVenue) {
   'use strict';
 
   /**
@@ -19,6 +20,7 @@ define([
     */
     routes: {
       'recent':   'recent',
+      'search':   'search',
       '*actions': 'default'
     },
 
@@ -29,6 +31,15 @@ define([
     */
     recent: function() {
       return new Recent();
+    },
+
+    /**
+      `search` route method.
+
+      @method search
+    */
+    search: function() {
+      return new SearchVenue();
     },
 
     /**
