@@ -30,3 +30,20 @@ section[role="region"] > header:first-child .icon-search {
 body[role="application"] > nav .inner > ul > li {
   display: inline;
 }
+
+@keyframes blink {  
+  0% { opacity: 1.0; }
+  50% { opacity: 0.0; }
+  100% { opacity: 1.0; }
+}
+
+section[role="region"] > header:first-child .icon-gps-status {
+  background: url("../img/GPS_ico.png") no-repeat scroll center center transparent;
+}
+
+section[role="region"] > header:first-child .waiting {
+  animation-name: blink;  
+  animation-iteration-count: infinite;  
+  animation-timing-function: cubic-bezier(.5, 0, 1, 1);
+  animation-duration: 1.7s;
+}

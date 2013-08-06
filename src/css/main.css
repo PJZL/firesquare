@@ -7,8 +7,7 @@
 @import url('../components/gaia-bb/widgets/toolbars.css');
 @import url('../components/gaia-bb/widgets/buttons.css');
 @import url('../components/gaia-bb/widgets/input_areas.css');
-
-@import url('lib/transitions.css');
+@import url('../components/gaia-bb/menus_dialogs/status.css');
 
 /* Import applications tyles */
 @import url('drawer.css');
