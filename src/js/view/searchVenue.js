@@ -4,8 +4,9 @@ define([
   'model/service',
   'model/venue',
   'model/self',
-  'view/venue'
-], function(template, itemTemplate, service, VenueModel, Self, VenueView) {
+  'view/venue',
+  'view/drawer'
+], function(template, itemTemplate, service, VenueModel, Self, VenueView, Drawer) {
   'use strict';
 
   var _drawer,
@@ -165,10 +166,10 @@ define([
     @static
     @private
   */
-  function _initialize(drawer) {
+  function _initialize() {
 
-    _drawer = drawer;
-    _drawer.setWindow('Search venue', _remove);
+    _drawer = new Drawer(_remove);
+    _drawer.setTitle('Search venue');
 
     $('section header a').last().on('click', _drawer.removeWindow);
     $('section div[role="main"]').last().html(_.template(template));

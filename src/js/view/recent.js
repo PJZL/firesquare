@@ -38,9 +38,8 @@ define([
     _recent.on('add', _add);
     _fetch = _recent.fetch();
 
-    $('body > section > header').prepend('<menu type="toolbar"><a href="#"><span class="icon icon-update">add</span></a><a href="#"><span class="icon icon-search">add</span></a></menu>');
+    $('body > section > header').prepend('<menu type="toolbar"><a href="#"><span class="icon icon-update">add</span></a></menu>');
     $('body > section > header > menu > a .icon-update').on('click', _update);
-    $('body > section > header > menu > a .icon-search').on('click', _searchVenue);
   }
 
   /**
