@@ -83,14 +83,24 @@ define([
   function _getPositionFallback() {
 
     function _callback(data) {
+      var dataJson;
+
+      if (typeof data === 'string') {
+        dataJson = JSON.parse(data);
+      } else {
+        dataJson = data;
+      }
+
       //Position could have already been updated from GPS.
       if (_position === undefined) {
-        if (typeof data === 'string') {
-          _position = JSON.parse(data);
-        } else {
-          _position = data;
-        }
+        _position = dataJson;
         _updateSearch();
+      } else if (_isGPS === false &&
+          _position.country !== undefined &&
+          _position.country !== dataJson.country_name &&
+          dataJson.country_name !== undefined) {
+        //GPS is not ready yet, and user is in another country. The best we can do.
+        _position = dataJson;
       }
     }
 
@@ -110,6 +120,7 @@ define([
   */
   function _getPosition() {
     var venue;
+    //Check if we have GPS position.
     if (_position === undefined) {
       if (Self.get('checkins').items.length > 0) {
         venue = Self.get('checkins').items[0].venue;
@@ -117,9 +128,9 @@ define([
           latitude: venue.location.lat,
           longitude: venue.location.lng
         };
-      } else {
-        _getPositionFallback();
       }
+      //Always get fallback - in at least country will be right.
+      _getPositionFallback();
     }
   }
 
