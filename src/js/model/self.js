@@ -22,7 +22,7 @@ define([
     @static
     @private
   */
-  function _authCallback(callback, data) {
+  function _authCallback(data, callback) {
 
     var _data;
 
@@ -53,7 +53,9 @@ define([
   _user.auth = function(success, error) {
     $.get(
       'https://api.foursquare.com/v2/users/self?oauth_token=' + service.foursquare.get('access_token'),
-      _authCallback.bind(this, success)
+      function(data) {
+        _authCallback(data, success);
+      }
     ).fail(error);
   };
 
