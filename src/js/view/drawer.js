@@ -1,8 +1,8 @@
 define([
   'text!template/drawer.html',
   'text!template/drawerWindow.html',
-  'model/self'
-], function (template, drawerWindowTemplate, self) {
+  'model/currentUser'
+], function (template, spinnerTemplate, drawerWindowTemplate, CurrentUser) {
   'use strict';
 
   var _isLoaded = false,
@@ -14,7 +14,7 @@ define([
     _removeAllWindow;
 
   /**
-    Method is called when Drawer object is initialised, but DOM drawer is initialised only once.
+    Method is called when Drawer object is initialized, but DOM drawer is initialized only once.
 
     @method _initialize
     @for Drawer
@@ -26,7 +26,7 @@ define([
   function _initialize(remove, update) {
     if (!_isLoaded) {
       _isLoaded = true;
-      $('body').html(_.template(template, self));
+      $('body').html(_.template(template, CurrentUser));
       $('body > section > header > a').on('click', _drawer);
     }
 
@@ -56,7 +56,8 @@ define([
   };
 
   /**
-    Method manages visibilty of left menu. When menu is visible it will be hidden. If menu is hidden it will became visible. If `hide` parameted is true menu will stay hidden.
+    Method manages visibility of left menu. When menu is visible it will be hidden.
+    If menu is hidden it will became visible. If `hide` parameter is true menu will stay hidden.
 
     @method _drawer
     @for Drawer
@@ -140,7 +141,7 @@ define([
 
     @method _removeWindow
     @for Drawer
-    @param {Object} event when funtion is called by user action.
+    @param {Object} event when function is called by user action.
     @param {function} callback
     @static
     @private
@@ -163,11 +164,11 @@ define([
   }
 
   /**
-    Method removes all windows. Calls `update` on current view i avaliable.
+    Method removes all windows. Calls `update` on current view is available.
 
     @method _removeAllWindow
     @for Drawer
-    @param {Object} event when funtion is called by user action.
+    @param {Object} event when function is called by user action.
     @static
     @private
   */

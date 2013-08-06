@@ -13,25 +13,20 @@ define([
   });
 
   asyncTest('authentication', function() {
-<<<<<<< HEAD:tests/model/currentUser.js
-    CurrentUser.once('change', function(self) {
-      deepEqual(self.get('isAuth'), true, 'user is authenticated');
-=======
 
     function success() {
       ok(true, 'user authentication successed');
-      deepEqual(Self.get('isAuth'), true, 'user is authenticated');
+      deepEqual(CurrentUser.get('isAuth'), true, 'user is authenticated');
       start();
     }
 
     function error() {
       ok(false, 'user authentication fail');
->>>>>>> upstream/unstable:tests/model/self.js
       start();
     }
 
     Service.foursquare.set('access_token', Mock.accessToken);
-    Self.auth(success, error);
+    CurrentUser.auth(success, error);
   });
 
   asyncTest('authentication error', function() {
