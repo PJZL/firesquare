@@ -12,7 +12,8 @@ define([
   var _drawer,
     _position,
     _search,
-    _positionWatch;
+    _positionWatch,
+    _isGPS = false;
 
   /**
     Method opens venue after user click.
@@ -134,10 +135,16 @@ define([
 
     function _success(position) {
       _position = position.coords;
+      $('body > section > header > menu > a .icon').removeClass('waiting');
+      _isGPS = true;
+    }
+
+    function _error() {
+      _isGPS = undefined;
     }
 
     if (window.navigator.geolocation !== undefined) {
-      _positionWatch = window.navigator.geolocation.watchPosition(_success);
+      _positionWatch = window.navigator.geolocation.watchPosition(_success, _error);
     }
   }
 
@@ -154,6 +161,29 @@ define([
     $('ul.venues > li').off('click', _itemClick);
     if (_positionWatch !== undefined) {
       window.navigator.geolocation.clearWatch(_positionWatch);
+    }
+    $('body > section > header > menu').remove();
+  }
+
+  /**
+    Method is called when user request GPS status information.
+
+    @method _showGPSStatus
+    @for SearchVenue
+    @param {Object} event object.
+    @static
+    @private
+  */
+  function _showGPSStatus(event) {
+    if (event !== undefined) {
+      event.preventDefault();
+    }
+    if (_isGPS === undefined) {
+      _drawer.showStatus('<strong>GPS</strong> device is unavailable');
+    } else if (_isGPS === true) {
+      _drawer.showStatus('Now we have your <strong>GPS</strong> position!');
+    } else {
+      _drawer.showStatus('Still waiting for <strong>GPS</strong>...');
     }
   }
 
@@ -176,6 +206,9 @@ define([
     $('input').on('keyup', _updateSearch);
     _getPosition();
     _getGPSPosition();
+
+    $('body > section > header').prepend('<menu type="toolbar"><a href="#search"><span class="icon icon-gps-status waiting">GPS</span></a></menu>');
+    $('body > section > header > menu > a .icon').on('click', _showGPSStatus);
   }
 
   /**

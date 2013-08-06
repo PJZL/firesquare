@@ -1,8 +1,9 @@
 define([
   'text!template/drawer.html',
   'text!template/drawerWindow.html',
+  'text!template/status.html',
   'model/self'
-], function (template, drawerWindowTemplate, self) {
+], function (template, drawerWindowTemplate, statusTemplate, self) {
   'use strict';
 
   var _isLoaded = false,
@@ -184,6 +185,20 @@ define([
     });
   };
 
+  function _showStatus(message, timeout) {
+    if (message === undefined) {
+      message = '';
+    }
+    if (timeout === undefined) {
+      timeout = 2000;
+    }
+
+    $('body').append(_.template(statusTemplate, {message: message}));
+    setTimeout(function() {
+      $('section[role="status"]').first().remove();
+    }, timeout);
+  }
+
   /**
     Drawer view that is extension of [Backbone.View](http://backbonejs.org/#View).
 
@@ -241,6 +256,7 @@ define([
       @method removeAllWindow
       @for Drawer
     */
-    removeAllWindow: _removeAllWindow
+    removeAllWindow: _removeAllWindow,
+    showStatus: _showStatus
   });
 });
