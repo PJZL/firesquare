@@ -88,7 +88,9 @@ define([
   function _remove() {
     if (_isLoaded) {
       _isLoaded = false;
-      $('body').html(_.template(spinnerTemplate));
+      _removeAllWindow();
+      _unloadView();
+      $('body > section > header > a').off('click', _drawer);
     }
   }
 

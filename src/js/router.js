@@ -3,14 +3,27 @@ define([
   'view/searchVenue',
   'view/login',
   'view/logging',
+  'view/drawer',
   'model/self',
   'model/service'
-], function (Recent, SearchVenue, Login, Logging, Self, Service) {
+], function (Recent, SearchVenue, Login, Logging, Drawer, Self, Service) {
   'use strict';
 
-  var _login,
-    _logging,
-    _drawer;
+  var _currentView;
+
+  function _removeCurrentView() {
+    if (_currentView !== undefined) {
+      _currentView.remove();
+      _currentView = undefined;
+    }
+  }
+
+  function _loadDrawer() {
+    if (!(_currentView instanceof Drawer)) {
+      _removeCurrentView();
+      _currentView = new Drawer();
+    }
+  }
 
   function _before(callback) {
     if (Self.get('isAuth')) {
@@ -52,11 +65,13 @@ define([
     },
 
     login: function() {
-      return new Login();
+      _removeCurrentView();
+      _currentView = new Login();
     },
 
     logging: function() {
-      return new Logging();
+      _removeCurrentView();
+      _currentView = new Logging();
     },
 
     /**
@@ -65,6 +80,7 @@ define([
       @method recent
     */
     recent: function() {_before(function() {
+      _loadDrawer();
       return new Recent();
     })},
 
@@ -74,6 +90,7 @@ define([
       @method search
     */
     search: function() {_before(function() {
+      _loadDrawer();
       return new SearchVenue();
     })},
 
