@@ -46,7 +46,7 @@ define([
 
     @method _before
     @for Router
-    @param callback function that loads requested view.
+    @param {function} callback function that loads requested view.
     @static
     @private
   */
@@ -69,7 +69,7 @@ define([
   $.ajaxSetup({
     statusCode: {
       401: function() {
-        //Redirec the to the login page if not already there.
+        //Redirect the to the login page if not already there.
         if (!(_currentView instanceof Login) &&
             !(_currentView instanceof Logging)) {
           Self.set('isAuth', false);
