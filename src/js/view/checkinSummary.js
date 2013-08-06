@@ -18,6 +18,29 @@ define([
   }
 
   /**
+    Method switch to `recent` view. If recent view is loaded it closes all open windows.
+
+    @method _close
+    @for CheckinSummary
+    @param event
+    @static
+    @private
+  */
+  function _close(event) {
+    if (event !== undefined) {
+      event.preventDefault();
+    }
+
+    var nextViewHash = '#recent';
+
+    if (window.location.hash === nextViewHash) {
+      _drawer.removeAllWindow();
+    } else {
+      window.location.hash = nextViewHash;
+    }
+  }
+
+  /**
     method is called when Login object is initialised.
 
     @method _initialize
@@ -35,7 +58,7 @@ define([
     _drawer = drawer;
     _drawer.setWindow('Checkin summary', _remove);
 
-    $('section header a').last().on('click', _drawer.removeAllWindow);
+    $('section header a').last().one('click', _close);
 
     for (i = 0; i < notifLength; i += 1) {
       if (notifications[i].type === 'message' ||

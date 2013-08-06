@@ -1,9 +1,8 @@
 define([
   'text!template/drawer.html',
-  'text!template/spinner.html',
   'text!template/drawerWindow.html',
   'model/self'
-], function (template, spinnerTemplate, drawerWindowTemplate, self) {
+], function (template, drawerWindowTemplate, self) {
   'use strict';
 
   var _isLoaded = false,
@@ -78,7 +77,7 @@ define([
   };
 
   /**
-    Method removes drower from DOM and shows spinner.
+    Method removes all windows, views from DOM, unloads events.
 
     @method _remove
     @for Drawer
@@ -88,7 +87,9 @@ define([
   function _remove() {
     if (_isLoaded) {
       _isLoaded = false;
-      $('body').html(_.template(spinnerTemplate));
+      _removeAllWindow();
+      _unloadView();
+      $('body > section > header > a').off('click', _drawer);
     }
   }
 
