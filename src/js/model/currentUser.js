@@ -5,7 +5,7 @@ define([
   'use strict';
 
   /**
-    Current user object. Is initialized unauthenticated. This object is returned when Self module is initialized.
+    Current user object. Is initialized unauthenticated. This object is returned when CurrentUser module is initialized.
 
     @property _user
     @type User
