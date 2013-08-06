@@ -194,7 +194,7 @@ define([
     }
 
     $('body').append(_.template(statusTemplate, {message: message}));
-    setTimeout(function() {
+    window.setTimeout(function() {
       $('section[role="status"]').first().remove();
     }, timeout);
   }

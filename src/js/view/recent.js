@@ -52,16 +52,12 @@ define([
   function _initialize() {
     _drawer = new Drawer(_remove, _update);
     _drawer.setTitle('Recent checkins');
-    //_drawer.setContent(_.template(template));
     _drawer.setContent(_.template(progressTemplate));
 
     _recent = new Recent();
     _fetch = _recent.fetch({
       success: _show
     });
-
-    //$('body > section > header').prepend('<menu type="toolbar"><a href="#"><span class="icon icon-update">add</span></a></menu>');
-    //$('body > section > header > menu > a .icon-update').on('click', _update);
   }
 
   /**
