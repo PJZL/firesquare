@@ -12,13 +12,12 @@ require.config({
 });
 
 require([
-  'view/login',
   'router'
-], function (Login, Router) {
+], function (Router) {
   'use strict';
 
-  //return new Login();
-
+  //load default router
   var _router = new Router();
+  //Begin Backbone history.
   Backbone.history.start(_router); //For jslint
 });

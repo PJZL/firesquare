@@ -1,13 +1,10 @@
 define([
   'text!template/login.html',
-  'text!template/spinner.html',
   'text!root/config.json',
-  'model/service',
-  'model/self'
-], function (template, spinnerTemplate, config, service, self) {
+  'model/service'
+], function (template, config, service) {
   'use strict';
   var _window,
-    _router,
     _initialize,
     _message,
     _exit,
@@ -38,23 +35,6 @@ define([
   }
 
   /**
-    Method is called after login and first data fetch from foursquare.
-
-    @method _selfAuth
-    @for Login
-    @static
-    @private
-  */
-  function _selfAuth() {
-    if (!self.get('isAuth')) {
-      _initialize();
-    } else {
-      _router = new Router();
-      Backbone.history.start(_router); //For jslint
-    }
-  }
-
-  /**
     Method is called after response from oauth endpoint is recived.
 
     @method _message
@@ -65,13 +45,6 @@ define([
   */
   _message = function (event) {
     var access_token = event.originalEvent.data.access_token;
-
-    /*if (access_token !== undefined) {
-      self.on('change:isAuth', _selfAuth);
-      service.foursquare.set('access_token', access_token);
-      _remove();
-      $('body').html(_.template(spinnerTemplate, {message: 'Logging in ...', button1: undefined, button2: undefined}));
-    }*/
 
     if (access_token !== undefined) {
       service.foursquare.set('access_token', access_token);

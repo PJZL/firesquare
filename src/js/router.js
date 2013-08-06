@@ -11,6 +11,14 @@ define([
 
   var _currentView;
 
+  /**
+    Method calls remove function on current main view if deffined.
+
+    @method _removeCurrentView
+    @for Router
+    @static
+    @private
+  */
   function _removeCurrentView() {
     if (_currentView !== undefined) {
       _currentView.remove();
@@ -18,6 +26,14 @@ define([
     }
   }
 
+  /**
+    Method check if current main view is Drawer. If it is not, current main view is removed and Drower is loaded.
+
+    @method _loadDrawer
+    @for Router
+    @static
+    @private
+  */
   function _loadDrawer() {
     if (!(_currentView instanceof Drawer)) {
       _removeCurrentView();
@@ -25,6 +41,15 @@ define([
     }
   }
 
+  /**
+    Method check if user is authenticated. If not it loads `login` or `logging` view. 
+
+    @method _before
+    @for Router
+    @param callback function that loads requested view.
+    @static
+    @private
+  */
   function _before(callback) {
     if (Self.get('isAuth')) {
       //user is authenticated - nothing to do here.
@@ -43,7 +68,7 @@ define([
   //Configure AJAX to load login page when user token is not valid anymore.
   $.ajaxSetup({
     statusCode: {
-      401: function(){
+      401: function() {
         //Redirec the to the login page if not already there.
         if (!(_currentView instanceof Login) &&
             !(_currentView instanceof Logging)) {
@@ -81,11 +106,21 @@ define([
       '*actions': 'default'
     },
 
+    /**
+      `login` route method.
+
+      @method login
+    */
     login: function() {
       _removeCurrentView();
       _currentView = new Login();
     },
 
+    /**
+      `logging` route method.
+
+      @method logging
+    */
     logging: function() {
       _removeCurrentView();
       _currentView = new Logging();
@@ -96,20 +131,24 @@ define([
 
       @method recent
     */
-    recent: function() {_before(function() {
-      _loadDrawer();
-      return new Recent();
-    })},
+    recent: function() {
+      _before(function() {
+        _loadDrawer();
+        return new Recent();
+      });
+    },
 
     /**
       `search` route method.
 
       @method search
     */
-    search: function() {_before(function() {
-      _loadDrawer();
-      return new SearchVenue();
-    })},
+    search: function() {
+      _before(function() {
+        _loadDrawer();
+        return new SearchVenue();
+      });
+    },
 
     /**
       default route method.
