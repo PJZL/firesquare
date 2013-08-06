@@ -2,7 +2,7 @@ define([
   'text!template/drawer.html',
   'text!template/drawerWindow.html',
   'model/currentUser'
-], function (template, spinnerTemplate, drawerWindowTemplate, CurrentUser) {
+], function (template, drawerWindowTemplate, CurrentUser) {
   'use strict';
 
   var _isLoaded = false,

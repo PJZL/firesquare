@@ -5,7 +5,7 @@ define([
 ], function (CurrentUser, Service, Mock) {
   'use strict';
 
-  module('model.self');
+  module('model.currentUser');
 
   test('module', function() {
     deepEqual(typeof CurrentUser, 'object', 'module is loaded');
@@ -42,6 +42,6 @@ define([
     }
 
     Service.foursquare.set('access_token', 'some invalid token');
-    Self.auth(success, error);
+    CurrentUser.auth(success, error);
   });
 });
