@@ -13,10 +13,35 @@ define([
   });
 
   asyncTest('authentication', function() {
-    Self.once('change', function(self) {
-      deepEqual(self.get('isAuth'), true, 'user is authenticated');
+
+    function success() {
+      ok(true, 'user authentication successed');
+      deepEqual(Self.get('isAuth'), true, 'user is authenticated');
       start();
-    });
+    }
+
+    function error() {
+      ok(false, 'user authentication fail');
+      start();
+    }
+
     Service.foursquare.set('access_token', Mock.accessToken);
+    Self.auth(success, error);
+  });
+
+  asyncTest('authentication error', function() {
+
+    function success() {
+      ok(false, 'user is authenticated');
+      start();
+    }
+
+    function error() {
+      ok(true, 'user authentication fail');
+      start();
+    }
+
+    Service.foursquare.set('access_token', 'some invalid token');
+    Self.auth(success, error);
   });
 });
