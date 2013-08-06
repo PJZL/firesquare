@@ -32,15 +32,32 @@ define([
     } else {
       if (Service.foursquare.get('access_token') === undefined) {
         // We don't have an access token so we need to log in first.
-        window.location.hash = '#login';
-        //this.navigate('login', {trigger : true});
+        Backbone.history.navigate('/login', true);
       } else {
         //We already have access token se we need to check if it's valid.
-        window.location.hash = '#logging';
-        //this.navigate('logging', {trigger : true});
+        Backbone.history.navigate('/logging', true);
       }
     }
   }
+
+  //Configure AJAX to load login page when user token is not valid anymore.
+  $.ajaxSetup({
+    statusCode: {
+      401: function(){
+        //Redirec the to the login page if not already there.
+        if (!(_currentView instanceof Login) &&
+            !(_currentView instanceof Logging)) {
+          Self.set('isAuth', false);
+          Service.foursquare.set('access_token', undefined);
+          Backbone.history.navigate('/login', true);
+        }
+      }//,
+      /*TODO:403: function() {
+        // 403 -- Access denied
+        Backbone.history.navigate('/login', true);
+      }*/
+    }
+  });
 
   /**
     Router object that is extension of [Backbone.Router](http://backbonejs.org/#Router).

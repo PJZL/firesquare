@@ -22,12 +22,12 @@ define([
     //If there is action to go back go!
     //if (window.history.go(-2) === undefined) {
       //Else load default action
-      window.location.hash = '#';
+      Backbone.history.navigate('/', true);
     //}
   }
 
   function _error() {
-    window.location.hash = '#login';
+    Backbone.history.navigate('/login', true);
   }
 
   /**
