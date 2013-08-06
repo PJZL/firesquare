@@ -4,8 +4,8 @@ define([
   'text!template/spinner.html',
   'text!root/config.json',
   'model/service',
-  'model/self'
-], function (Router, template, spinnerTemplate, config, service, self) {
+  'model/currentUser'
+], function (Router, template, spinnerTemplate, config, Service, CurrentUser) {
   'use strict';
   var _window,
     _router,
@@ -41,13 +41,13 @@ define([
   /**
     Method is called after login and first data fetch from foursquare.
 
-    @method _selfAuth
+    @method _userAuth
     @for Login
     @static
     @private
   */
-  function _selfAuth() {
-    if (!self.get('isAuth')) {
+  function _userAuth() {
+    if (!CurrentUser.get('isAuth')) {
       _initialize();
     } else {
       _router = new Router();
@@ -68,8 +68,8 @@ define([
     var access_token = event.originalEvent.data.access_token;
 
     if (access_token !== undefined) {
-      self.on('change:isAuth', _selfAuth);
-      service.foursquare.set('access_token', access_token);
+      CurrentUser.on('change:isAuth', _userAuth);
+      Service.foursquare.set('access_token', access_token);
       _remove();
       $('body').html(_.template(spinnerTemplate, {message: 'Logging in ...', button1: undefined, button2: undefined}));
     }
@@ -77,7 +77,7 @@ define([
   };
 
   /**
-    Method is called when Login object is initialised.
+    Method is called when Login object is initialized.
 
     @method _initialize
     @for Login

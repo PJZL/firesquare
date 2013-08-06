@@ -4,8 +4,8 @@ define([
 ], function(User, service) {
   'use strict';
 
-  /** 
-    Current user object. Is initialised unauthenticated. This object is returned when Self module is initialised.
+  /**
+    Current user object. Is initialized unauthenticated. This object is returned when Self module is initialized.
 
     @property _user
     @type User
