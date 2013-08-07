@@ -110,7 +110,7 @@ define([
   function _getPosition() {
     var venue;
     if (_position === undefined) {
-      if (CurrentUser.get('checkins') !== undefined &&
+      if (CurrentUser.get('checkins').count > 0 &&
           CurrentUser.get('checkins').items.length > 0) {
         venue = CurrentUser.get('checkins').items[0].venue;
         _position = {
