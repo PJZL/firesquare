@@ -1,14 +1,16 @@
 <article style="padding: 1rem;">
   <h1 class="checkinSummary">
-    <%= message.item.message %>
+    <%= where({type: 'message'})get('item').message %>
   </h1>
-  <% if (insights !== undefined) { %>
+  <% 
+      var insights = where({type: 'insights'}).get('item').insights;
+      if (insights !== undefined) { %>
   <ul>
     <%  var i,
           count = insights.item.insights.count;
         for(i = 0; i < count ; i += 1) { %>
     <li data-state="new">
-      <a>
+      <a >
         <em class="aside" style="
             background: url('<%= insights.item.insights.items[i].points.image.prefix + insights.item.insights.items[i].points.image.sizes[0] + insights.item.insights.items[i].points.image.name %>') no-repeat center center transparent;
           ">

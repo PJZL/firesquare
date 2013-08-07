@@ -1,10 +1,11 @@
 define([
   'text!template/checkinSummary.html',
   'text!template/info.html'
-], function(template) {
+], function(template, infoTemplate) {
   'use strict';
 
-  var _drawer;
+  var _drawer,
+    _notifications;
 
   /**
     method removes Login from DOM and unbinds events.
@@ -20,10 +21,10 @@ define([
 
   function _showDetails() {
     $('body').append(_.template(infoTemplate, {
-      message: 'Checkin in failed!',
-      details: data.statusText,
-      button1: 'Cancel',
-      button2: 'Retry'
+      message: '',
+      details: $('li[data-state="new"] a dl dt').text(),
+      button1: 'Ok',
+      button2: undefined
     }));
     $('button.button1').on('click', function() {
       $('body > form').remove();
@@ -64,6 +65,23 @@ define([
     @private
   */
   function _initialize(notifications, drawer) {
+
+    _notifications = notifications;
+    _drawer = drawer;
+
+    _drawer.setWindow('Checkin summary', _remove);
+    $('section header a').last().one('click', _close);
+
+    var insi = _notifications.where({type: 'insights'});
+
+    console.log(insi);
+    console.log(insi.getItem);
+    //console.log(_notifications.where({type: 'message'}));
+
+    //$('section div[role="main"]').last().html(_.template(template, _notifications));
+    $('li[data-state="new"] a').on('click', _showDetails);
+
+    /*
     var i,
       notif = {},
       notifLength = notifications.length;
@@ -86,6 +104,7 @@ define([
 
     $('section div[role="main"]').last().html(_.template(template, notif));
     $('li[data-state="new"] a').on('click', _showDetails);
+    */
   }
 
   /**
