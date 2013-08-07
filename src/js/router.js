@@ -4,9 +4,9 @@ define([
   'view/login',
   'view/logging',
   'view/drawer',
-  'model/self',
+  'model/currentUser',
   'model/service'
-], function (Recent, SearchVenue, Login, Logging, Drawer, Self, Service) {
+], function (Recent, SearchVenue, Login, Logging, Drawer, CurrentUser, Service) {
   'use strict';
 
   var _currentView;
@@ -42,7 +42,7 @@ define([
   }
 
   /**
-    Method check if user is authenticated. If not it loads `login` or `logging` view. 
+    Method check if user is authenticated. If not it loads `login` or `logging` view.
 
     @method _before
     @for Router
@@ -51,7 +51,7 @@ define([
     @private
   */
   function _before(callback) {
-    if (Self.get('isAuth')) {
+    if (CurrentUser.get('isAuth')) {
       //user is authenticated - nothing to do here.
       callback();
     } else {
@@ -72,7 +72,7 @@ define([
         //Redirect the to the login page if not already there.
         if (!(_currentView instanceof Login) &&
             !(_currentView instanceof Logging)) {
-          Self.set('isAuth', false);
+          CurrentUser.set('isAuth', false);
           Service.foursquare.set('access_token', undefined);
           Backbone.history.navigate('/login', true);
         }
@@ -94,7 +94,7 @@ define([
     /**
       Defines routing rules.
 
-      @property routes 
+      @property routes
       @type {Object}
       @readOnly
     */

@@ -1,22 +1,22 @@
 define([
-  'model/self',
+  'model/currentUser',
   'model/service',
   'mock/foursquare.users.self'
-], function (Self, Service, Mock) {
+], function (CurrentUser, Service, Mock) {
   'use strict';
 
-  module('model.self');
+  module('model.currentUser');
 
   test('module', function() {
-    deepEqual(typeof Self, 'object', 'module is loaded');
-    deepEqual(Self.get('isAuth'), false, 'user is not authenticated');
+    deepEqual(typeof CurrentUser, 'object', 'module is loaded');
+    deepEqual(CurrentUser.get('isAuth'), false, 'user is not authenticated');
   });
 
   asyncTest('authentication', function() {
 
     function success() {
       ok(true, 'user authentication successed');
-      deepEqual(Self.get('isAuth'), true, 'user is authenticated');
+      deepEqual(CurrentUser.get('isAuth'), true, 'user is authenticated');
       start();
     }
 
@@ -26,7 +26,7 @@ define([
     }
 
     Service.foursquare.set('access_token', Mock.accessToken);
-    Self.auth(success, error);
+    CurrentUser.auth(success, error);
   });
 
   asyncTest('authentication error', function() {
@@ -42,6 +42,6 @@ define([
     }
 
     Service.foursquare.set('access_token', 'some invalid token');
-    Self.auth(success, error);
+    CurrentUser.auth(success, error);
   });
 });
