@@ -1,5 +1,6 @@
 define([
-  'text!template/checkinSummary.html'
+  'text!template/checkinSummary.html',
+  'text!template/info.html'
 ], function(template) {
   'use strict';
 
@@ -15,6 +16,18 @@ define([
   */
   function _remove() {
     return;
+  }
+
+  function _showDetails() {
+    $('body').append(_.template(infoTemplate, {
+      message: 'Checkin in failed!',
+      details: data.statusText,
+      button1: 'Cancel',
+      button2: 'Retry'
+    }));
+    $('button.button1').on('click', function() {
+      $('body > form').remove();
+    });
   }
 
   /**
@@ -72,6 +85,7 @@ define([
     }
 
     $('section div[role="main"]').last().html(_.template(template, notif));
+    $('li[data-state="new"] a').on('click', _showDetails);
   }
 
   /**
