@@ -12,7 +12,7 @@ require.config({
 
 require([
   'tests/collection/recent',
-  'tests/model/self',
+  'tests/model/currentUser',
   'tests/model/service',
   'tests/model/checkin',
   'tests/model/user',

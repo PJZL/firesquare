@@ -3,10 +3,10 @@ define([
   'text!template/searchVenueItem.html',
   'model/service',
   'model/venue',
-  'model/self',
+  'model/currentUser',
   'view/venue',
   'view/drawer'
-], function(template, itemTemplate, service, VenueModel, Self, VenueView, Drawer) {
+], function(template, itemTemplate, Service, VenueModel, CurrentUser, VenueView, Drawer) {
   'use strict';
 
   var _drawer,
@@ -66,7 +66,7 @@ define([
         _search.abort();
       }
       _search = $.get(
-        'https://api.foursquare.com/v2/venues/search?ll=' + _position.latitude + ',' + _position.longitude + '&oauth_token=' + service.foursquare.get('access_token') + '&query=' + $('input').val(),
+        'https://api.foursquare.com/v2/venues/search?ll=' + _position.latitude + ',' + _position.longitude + '&oauth_token=' + Service.foursquare.get('access_token') + '&query=' + $('input').val(),
         _callback
       );
     }
@@ -111,8 +111,8 @@ define([
   function _getPosition() {
     var venue;
     if (_position === undefined) {
-      if (Self.get('checkins').items.length > 0) {
-        venue = Self.get('checkins').items[0].venue;
+      if (CurrentUser.get('checkins').items.length > 0) {
+        venue = CurrentUser.get('checkins').items[0].venue;
         _position = {
           latitude: venue.location.lat,
           longitude: venue.location.lng
@@ -124,7 +124,7 @@ define([
   }
 
   /**
-    Method updates current user position when window.navigator.goolocation is avaliable.
+    Method updates current user position when window.navigator.geolocation is available.
 
     @method _getGPSPosition
     @for SearchVenue
@@ -188,7 +188,7 @@ define([
   }
 
   /**
-    Method is called when SearchVenue object is initialised.
+    Method is called when SearchVenue object is initialized.
 
     @method _initialize
     @for SearchVenue

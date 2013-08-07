@@ -1,7 +1,7 @@
 define([
   'text!template/spinner.html',
-  'model/self'
-], function (template, Self) {
+  'model/currentUser'
+], function (template, CurrentUser) {
   'use strict';
 
   /**
@@ -40,7 +40,7 @@ define([
     }
 
     $('body').html(_.template(template, {message: 'Logging in ...', button1: undefined, button2: undefined}));
-    Self.auth(_success, _error);
+    CurrentUser.auth(_success, _error);
   }
 
   /**

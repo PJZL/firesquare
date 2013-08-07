@@ -55,7 +55,7 @@ define([
   };
 
   /**
-    Method is called when Login object is initialised.
+    Method is called when Login object is initialized.
 
     @method _initialize
     @for Login
