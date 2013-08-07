@@ -110,7 +110,8 @@ define([
   function _getPosition() {
     var venue;
     if (_position === undefined) {
-      if (CurrentUser.get('checkins').items.length > 0) {
+      if (CurrentUser.get('checkins') !== undefined &&
+          CurrentUser.get('checkins').items.length > 0) {
         venue = CurrentUser.get('checkins').items[0].venue;
         _position = {
           latitude: venue.location.lat,
