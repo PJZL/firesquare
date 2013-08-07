@@ -45,5 +45,5 @@ section[role="region"] > header:first-child .waiting {
   animation-name: blink;  
   animation-iteration-count: infinite;  
   animation-timing-function: cubic-bezier(.5, 0, 1, 1);
-  animation-duration: 1.7s;
+  animation-duration: 1.5s;
 }

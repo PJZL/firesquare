@@ -10,10 +10,13 @@ define([
   'use strict';
 
   var _drawer,
-    _position,
+    _position = {
+      gps: undefined,
+      checkin: undefined,
+      service: undefined
+    },
     _search,
-    _positionWatch,
-    _isGPS = false;
+    _positionWatch;
 
   /**
     Method opens venue after user click.
@@ -35,7 +38,8 @@ define([
   }
 
   /**
-    Method updates current user position from freegeoip.net.
+    Method updates current user rearch results. If we don't have GPS position we check for last checkin and external service.
+    If checkin and service have different countries we always trust external service. We assume that no one uses proxy on cellphone.
 
     @method _updateSearch
     @for SearchVenue
@@ -43,6 +47,8 @@ define([
     @private
   */
   function _updateSearch() {
+
+    var input = $('input');
 
     function _callback(data) {
       $('ul.venues').empty();
@@ -58,29 +64,108 @@ define([
       $('ul.venues > li').on('click', _itemClick);
     }
 
-    if (_position !== undefined &&
-        $('input').val() !== '') {
+    function _showProgress() {
       $('ul.venues > li').off('click', _itemClick);
       $('ul.venues').html('<progress class="centre top"></progress>');
+    }
+
+    function _getSearch(position) {
       if (_search !== undefined) {
         _search.abort();
       }
       _search = $.get(
-        'https://api.foursquare.com/v2/venues/search?ll=' + _position.latitude + ',' + _position.longitude + '&oauth_token=' + Service.foursquare.get('access_token') + '&query=' + $('input').val(),
+        'https://api.foursquare.com/v2/venues/search?ll=' + position.latitude + ',' + position.longitude + '&oauth_token=' + Service.foursquare.get('access_token') + '&query=' + $('input').val(),
         _callback
       );
+    }
+
+    //Check if we have any position.
+    if (((_position.gps !== undefined && _position.gps !== false) ||
+        _position.checkin !== undefined ||
+        _position.service !== undefined) &&
+        input.val() !== '') {
+      _showProgress();
+      //If we have a gps position.
+      if (_position.gps !== undefined && _position.gps !== false) {
+        _getSearch(_position.gps);
+      } else if (_position.checkin !== undefined &&
+          _position.service !== undefined) {
+        //If we have both checkin and service. Service country should be right.
+        if (_position.checkin.country !== _position.service.country_name) {
+          _getSearch(_position.service);
+        } else {
+          _getSearch(_position.checkin);
+        }
+      } else if (_position.checkin !== undefined) {
+        _getSearch(_position.checkin);
+      } else {
+        _getSearch(_position.service);
+      }
     }
   }
 
   /**
-    Method updates current user position from freegeoip.net.
+    Method actualize current user position using GPS.
 
-    @method _getPositionFallback
+    @method _getGPS
     @for SearchVenue
     @static
     @private
   */
-  function _getPositionFallback() {
+  function _getGPS() {
+    function _success(position) {
+      _position.gps = position.coords;
+      $('body > section > header > menu > a .icon').removeClass('waiting');
+      _updateSearch();
+    }
+
+    function _error() {
+      _position.gps = false;
+    }
+
+    if (window.navigator.geolocation !== undefined) {
+      _positionWatch = window.navigator.geolocation.watchPosition(_success, _error);
+    }
+  }
+
+  /**
+    Method fetch current user position from last checkin.
+
+    @method _getGPS
+    @for SearchVenue
+    @static
+    @private
+  */
+  function _getCheckin() {
+
+    function _callback() {
+      var venue;
+
+      if (CurrentUser.get('checkins').items.length > 0) {
+        venue = CurrentUser.get('checkins').items[0].venue;
+        _position.checkin = venue.location;
+        _position.checkin.latitude = venue.location.lat;
+        _position.checkin.longitude = venue.location.lng;
+        _updateSearch();
+      }
+    }
+
+    //If we fail to reset model state, use last avaliable checkin.
+    CurrentUser.fetch({
+      success: _callback,
+      error: _callback
+    });
+  }
+
+  /**
+    Method fetch current user position from freegeoip.net service.
+
+    @method _getGPS
+    @for SearchVenue
+    @static
+    @private
+  */
+  function _getService() {
 
     function _callback(data) {
       var dataJson;
@@ -91,72 +176,14 @@ define([
         dataJson = data;
       }
 
-      //Position could have already been updated from GPS.
-      if (_position === undefined) {
-        _position = dataJson;
-        _updateSearch();
-      } else if (_isGPS === false &&
-          _position.country !== undefined &&
-          _position.country !== dataJson.country_name &&
-          dataJson.country_name !== undefined) {
-        //GPS is not ready yet, and user is in another country. The best we can do.
-        _position = dataJson;
-      }
+      _position.service = dataJson;
+      _updateSearch();
     }
 
     $.get(
       'http://freegeoip.net/json/',
       _callback
     );
-  }
-
-  /**
-    Method updates current user position from last checkin if avaliable. If last checkin is not avaliable {{#crossLink "SearchVenue/_getPositionFallback"}}{{/crossLink}} is called.
-
-    @method _getPosition
-    @for SearchVenue
-    @static
-    @private
-  */
-  function _getPosition() {
-    var venue;
-    //Check if we have GPS position.
-    if (_position === undefined) {
-      if (CurrentUser.get('checkins').items.length > 0) {
-        venue = CurrentUser.get('checkins').items[0].venue;
-        _position = {
-          latitude: venue.location.lat,
-          longitude: venue.location.lng
-        };
-      }
-      //Always get fallback - in at least country will be right.
-      _getPositionFallback();
-    }
-  }
-
-  /**
-    Method updates current user position when window.navigator.geolocation is available.
-
-    @method _getGPSPosition
-    @for SearchVenue
-    @static
-    @private
-  */
-  function _getGPSPosition() {
-
-    function _success(position) {
-      _position = position.coords;
-      $('body > section > header > menu > a .icon').removeClass('waiting');
-      _isGPS = true;
-    }
-
-    function _error() {
-      _isGPS = undefined;
-    }
-
-    if (window.navigator.geolocation !== undefined) {
-      _positionWatch = window.navigator.geolocation.watchPosition(_success, _error);
-    }
   }
 
   /**
@@ -189,12 +216,12 @@ define([
     if (event !== undefined) {
       event.preventDefault();
     }
-    if (_isGPS === undefined) {
+    if (_position.gps === undefined) {
+      _drawer.showStatus('Still waiting for <strong>GPS</strong> signal. You can try to search anyway.');
+    } else if (_position.gps === false) {
       _drawer.showStatus('<strong>GPS</strong> device is unavailable');
-    } else if (_isGPS === true) {
-      _drawer.showStatus('Now we have your <strong>GPS</strong> position!');
     } else {
-      _drawer.showStatus('Still waiting for <strong>GPS</strong>...');
+      _drawer.showStatus('Now we have your <strong>GPS</strong> position!');
     }
   }
 
@@ -215,8 +242,9 @@ define([
     $('section header a').last().on('click', _drawer.removeWindow);
     $('section div[role="main"]').last().html(_.template(template));
     $('input').on('keyup', _updateSearch);
-    _getPosition();
-    _getGPSPosition();
+    _getGPS();
+    _getCheckin();
+    _getService();
 
     $('body > section > header').prepend('<menu type="toolbar"><a href="#search"><span class="icon icon-gps-status waiting">GPS</span></a></menu>');
     $('body > section > header > menu > a .icon').on('click', _showGPSStatus);
