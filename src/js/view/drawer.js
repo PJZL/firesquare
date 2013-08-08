@@ -186,6 +186,16 @@ define([
     });
   };
 
+  /**
+    Method shows information bar at the bottom of the screen.
+
+    @method _showStatus
+    @for Drawer
+    @param {String} message that would be shown to user.
+    @param {number} timeout time.
+    @static
+    @private
+  */
   function _showStatus(message, timeout) {
     if (message === undefined) {
       message = '';
