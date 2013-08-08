@@ -2,22 +2,40 @@ define([
 ], function () {
   'use strict';
 
-  function _returnModel(item) {
-    return new Backbone.Model(item[item.type]);
+  /**
+    Method get multi elsments Foursquare object and returns [Backbone.Collection](http://backbonejs.org/#Collection).
+
+    @method _returnCollection
+    @for Notification
+    @param {Array} collection
+    @static
+    @private
+  */
+  function _returnCollection(collection) {
+    if (collection.count > 0){
+      return new Backbone.Collection(collection.items);
+    }
+    return new Backbone.Collection();
   }
 
-  function _returnCollection(item) {
-    return new Backbone.Collection(item[item.type].items);
-  }
+  /**
+    Method determines type of noticication and returns [Backbone.Model](http://backbonejs.org/#Model)
+    or [Backbone.Collection](http://backbonejs.org/#Collection), containing notification data.
 
+    @method _getItem
+    @for Notification
+    @param {Model.Notification} notification
+    @static
+    @private
+  */
   function _getItem(notification) {
-    var item = notification.get('item');
+    var type = notification.get('type');
 
-    switch (item.type) {
+    switch (type) {
       case 'message':
-        return _returnModel(item);
+        return new Backbone.Model(notification.get('item'));
       case 'insights':
-        return _returnCollection(item);
+        return _returnCollection(notification.get('item')[type]);
     }
   }
 
@@ -29,9 +47,14 @@ define([
     @extends Backbone.Model
   */
   return Backbone.Model.extend({
+    /**
+      Method runs {{#crossLink "Notification/_getItem"}}{{/crossLink}} method that returns notification data.
+
+      @method getItem
+      @for Notification
+    */
     getItem: function () {
-      //return _getItem(this);
-      console.log(this);
+      return _getItem(this);
     }
   });
 

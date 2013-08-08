@@ -103,8 +103,6 @@ define([
       }
 
       return new CheckinSummary(new Notifications(data.notifications), _drawer);
-
-      //return new CheckinSummary(data.notifications, _drawer);
     }
 
     function _abort() {

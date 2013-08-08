@@ -5,10 +5,34 @@ define([
   'use strict';
 
   var _drawer,
-    _notifications;
+    _insights = new Backbone.Collection();
 
   /**
-    method removes Login from DOM and unbinds events.
+    Method shows insight details in info window.
+
+    @method _showDetails
+    @for CheckinSummary
+    @param event
+    @static
+    @private
+  */
+  function _showDetails(event) {
+    var insight = _insights.get(event.currentTarget.id);
+
+    $('body').append(_.template(infoTemplate, {
+      message: '<div style="text-align: center;"><img src="' + insight.get('points').image.prefix + insight.get('points').image.sizes[2] + insight.get('points').image.name + '"/></div>',
+      details: insight.get('points').message,
+      button1: 'Ok',
+      button2: undefined
+    }));
+
+    $('button.button1').one('click', function() {
+      $('body > form').remove();
+    });
+  }
+
+  /**
+    Method removes Login from DOM and unbinds events.
 
     @method _remove
     @for CheckinSummary
@@ -16,19 +40,7 @@ define([
     @private
   */
   function _remove() {
-    return;
-  }
-
-  function _showDetails() {
-    $('body').append(_.template(infoTemplate, {
-      message: '',
-      details: $('li[data-state="new"] a dl dt').text(),
-      button1: 'Ok',
-      button2: undefined
-    }));
-    $('button.button1').on('click', function() {
-      $('body > form').remove();
-    });
+    $('li[data-state="new"] a').off('click', _showDetails);
   }
 
   /**
@@ -55,7 +67,7 @@ define([
   }
 
   /**
-    method is called when Login object is initialised.
+    Method is called when Login object is initialised.
 
     @method _initialize
     @for CheckinSummary
@@ -65,46 +77,33 @@ define([
     @private
   */
   function _initialize(notifications, drawer) {
+    var insights,
+      message;
 
-    _notifications = notifications;
     _drawer = drawer;
 
     _drawer.setWindow('Checkin summary', _remove);
     $('section header a').last().one('click', _close);
 
-    var insi = _notifications.where({type: 'insights'});
+    insights = notifications.where({type: 'insights'});
 
-    console.log(insi);
-    console.log(insi.getItem);
-    //console.log(_notifications.where({type: 'message'}));
-
-    //$('section div[role="main"]').last().html(_.template(template, _notifications));
-    $('li[data-state="new"] a').on('click', _showDetails);
-
-    /*
-    var i,
-      notif = {},
-      notifLength = notifications.length;
-
-    _drawer = drawer;
-    _drawer.setWindow('Checkin summary', _remove);
-
-    $('section header a').last().one('click', _close);
-
-    for (i = 0; i < notifLength; i += 1) {
-      if (notifications[i].type === 'message' ||
-          notifications[i].type === 'insights') {
-        notif[notifications[i].type] = notifications[i];
-      }
+    if (insights.length > 0) {
+      _insights = insights[0].getItem();
     }
 
-    if (notif.insights === undefined) {
-      notif.insights = undefined;
+    message = notifications.where({type: 'message'});
+    if (message.length > 0) {
+      message = message[0].getItem();
+    } else {
+      message + '';
     }
 
-    $('section div[role="main"]').last().html(_.template(template, notif));
+    $('section div[role="main"]').last().html(_.template(template, {
+        insights: _insights,
+        message: message.get('message')
+      })
+    );
     $('li[data-state="new"] a').on('click', _showDetails);
-    */
   }
 
   /**
@@ -115,7 +114,19 @@ define([
     @extends Backbone.View
   */
   return Backbone.View.extend({
+    /**
+      Method points to {{#crossLink "CheckinSummary/_initialize"}}{{/crossLink}} method.
+
+      @method initialize
+      @for CheckinSummary
+    */
     initialize: _initialize,
-    remove:     _remove
+    /**
+      Method points to {{#crossLink "CheckinSummary/_remove"}}{{/crossLink}} method.
+
+      @method remove
+      @for CheckinSummary
+    */
+    remove: _remove
   });
 });
