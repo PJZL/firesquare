@@ -80,7 +80,11 @@ module.exports = function(grunt) {
               'components/gaia-bb/widgets/buttons.css',
               'components/gaia-bb/widgets/buttons/images/**',
               'components/gaia-bb/widgets/input_areas.css',
-              'components/gaia-bb/widgets/input_areas/images/**'
+              'components/gaia-bb/widgets/input_areas/images/**',
+              'components/gaia-bb/widgets/switches.css',
+              'components/gaia-bb/widgets/switches/images/**',
+              'components/gaia-bb/menus_dialogs/status.css',
+              'components/gaia-bb/menus_dialogs/status/images/**'
             ],
             cwd: 'src/',
             dest: 'dist/<%= pkg.version %>'
