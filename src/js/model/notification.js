@@ -12,7 +12,7 @@ define([
     @private
   */
   function _returnCollection(collection) {
-    if (collection.count > 0){
+    if (collection.count > 0) {
       return new Backbone.Collection(collection.items);
     }
     return new Backbone.Collection();
@@ -32,10 +32,10 @@ define([
     var type = notification.get('type');
 
     switch (type) {
-      case 'message':
-        return new Backbone.Model(notification.get('item'));
-      case 'insights':
-        return _returnCollection(notification.get('item')[type]);
+    case 'message':
+      return new Backbone.Model(notification.get('item'));
+    case 'insights':
+      return _returnCollection(notification.get('item')[type]);
     }
   }
 

@@ -18,6 +18,6 @@ define([
       @type {Checkin}
       @readOnly
     */
-    model: Notification,
+    model: Notification
   });
 });

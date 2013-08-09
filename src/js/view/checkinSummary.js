@@ -95,14 +95,13 @@ define([
     if (message.length > 0) {
       message = message[0].getItem();
     } else {
-      message + '';
+      message = '';
     }
 
     $('section div[role="main"]').last().html(_.template(template, {
-        insights: _insights,
-        message: message.get('message')
-      })
-    );
+      insights: _insights,
+      message: message.get('message')
+    }));
     $('li[data-state="new"] a').on('click', _showDetails);
   }
 
