@@ -6,7 +6,7 @@
   <ul>
     <%  insights.each(function(element) { %>
     <li data-state="new">
-      <a id="<%= element.cid %>">
+      <a insight-cid="<%= element.cid %>">
         <em class="aside" style="
             background: url('<%= element.get('points').image.prefix + element.get('points').image.sizes[0] + element.get('points').image.name %>') no-repeat center center transparent;
           ">

@@ -17,7 +17,7 @@ define([
     @private
   */
   function _showDetails(event) {
-    var insight = _insights.get(event.currentTarget.id),
+    var insight = _insights.get($(event.currentTarget).attr('insight-cid')),
       image = insight.get('points').image;
 
     $('body').append(_.template(infoTemplate, {
