@@ -44,7 +44,7 @@ define([
       @param {function} error callback
     */
     checkin: function(options) {
-      if (typeof(options.success) != 'function' || typeof(options.error) != 'function') {
+      if (typeof (options.success) !== 'function' || typeof (options.error) !== 'function') {
         return false;
       }
 
@@ -54,7 +54,7 @@ define([
           venueId:      this.get('id'),
           oauth_token:  service.foursquare.get('access_token'),
           shout: options.shout,
-          broadcast: options.broadcast != undefined ? options.broadcast : 'public'
+          broadcast: options.broadcast !== undefined ? options.broadcast : 'public'
         },
         success: options.success,
         error: options.error,

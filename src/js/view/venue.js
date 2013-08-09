@@ -1,15 +1,12 @@
 define([
   'text!template/venue.html',
-  'text!template/spinner.html',
-  'text!template/info.html',
   'view/checkinAdd'
-], function (template, spinnerTemplate, infoTemplate, CheckinAdd) {
+], function (template, CheckinAdd) {
   'use strict';
 
   var _venue,
     _drawer,
     _fetch,
-    _checkinPromise,
     _checkin;
 
   /**
