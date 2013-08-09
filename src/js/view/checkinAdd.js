@@ -2,8 +2,9 @@ define([
   'text!template/checkinAdd.html',
   'text!template/spinner.html',
   'text!template/info.html',
-  'view/checkinSummary'
-], function(template, spinnerTemplate, infoTemplate, CheckinSummary) {
+  'view/checkinSummary',
+  'collection/notifications'
+], function (template, spinnerTemplate, infoTemplate, CheckinSummary, Notifications) {
   "use strict";
 
   var _venue,
@@ -45,7 +46,7 @@ define([
         data = JSON.parse(data);
       }
 
-      return new CheckinSummary(data.notifications, _drawer);
+      return new CheckinSummary(new Notifications(data.notifications), _drawer);
     }
 
     function _abort() {
