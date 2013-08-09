@@ -17,10 +17,11 @@ define([
     @private
   */
   function _showDetails(event) {
-    var insight = _insights.get(event.currentTarget.id);
+    var insight = _insights.get(event.currentTarget.id),
+      image = insight.get('points').image;
 
     $('body').append(_.template(infoTemplate, {
-      message: '<div style="text-align: center;"><img src="' + insight.get('points').image.prefix + insight.get('points').image.sizes[2] + insight.get('points').image.name + '"/></div>',
+      message: '<div style="text-align: center;"><img src="' + image.prefix + image.sizes[2] + image.name + '"/></div>',
       details: insight.get('points').message,
       button1: 'Ok',
       button2: undefined
