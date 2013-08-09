@@ -4,11 +4,12 @@
   </h1>
 
   <ul>
-    <%  insights.each(function(element) { %>
+    <%  insights.each(function(element) { 
+          var image = element.get('points').image; %>
     <li data-state="new">
       <a data-cid="<%= element.cid %>">
         <em class="aside" style="
-            background: url('<%= element.get('points').image.prefix + element.get('points').image.sizes[0] + element.get('points').image.name %>') no-repeat center center transparent;
+            background: url('<%= image.prefix + image.sizes[0] + image.name %>') no-repeat center center transparent;
           ">
         </em>
         <dl>
