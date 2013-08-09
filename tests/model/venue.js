@@ -48,6 +48,6 @@ define([
     }
 
     Service.foursquare.set('access_token', Mock.accessToken);
-    venue.checkin(success, error);
+    venue.checkin({success: success, error: error});
   });
 });
