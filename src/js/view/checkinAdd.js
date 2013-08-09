@@ -28,10 +28,13 @@ define([
         button1: 'Cancel',
         button2: 'Retry'
       }));
-      $('button.button1').on('click', function() {
+      $('button.button1').one('click', function() {
         $('body > form').remove();
       });
-      $('button.button2').on('click', _checkin);
+      $('button.button2').on('click', function() {
+        $('body > form').remove();
+        _checkin();
+      });
     }
 
     function _success(data) {
@@ -66,7 +69,12 @@ define([
       media.push($(this).data('media'));
     });
 
-    _checkinPromise = _venue.checkin({success: _success, error: _error, shout: $('#checkin-shout').val(), broadcast: media.join()});
+    _checkinPromise = _venue.checkin({
+      success: _success,
+      error: _error,
+      shout: $('#checkin-shout').val(),
+      broadcast: media.join()
+    });
     $('button.button1').on('click', _abort);
   }
 
@@ -81,7 +89,7 @@ define([
   function _refresh() {
     $('body[role="application"] section[role="region"] > header h1').last().html(_venue.get('name'));
     $('section div[role="main"]').last().html(_.template(template, _venue));
-    $('button.recommend').on('click', _checkin);
+    $('button.recommend').one('click', _checkin);
   }
 
   /**
@@ -118,8 +126,6 @@ define([
     $('section header a').last().on('click', _drawer.removeWindow);
     _refresh();
   }
-
-
 
   /**
     CheckinAdd view that is extension of [Backbone.View](http://backbonejs.org/#View).
