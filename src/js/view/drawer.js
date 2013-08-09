@@ -1,8 +1,9 @@
 define([
   'text!template/drawer.html',
   'text!template/drawerWindow.html',
+  'text!template/status.html',
   'model/currentUser'
-], function (template, drawerWindowTemplate, CurrentUser) {
+], function (template, drawerWindowTemplate, statusTemplate, CurrentUser) {
   'use strict';
 
   var _isLoaded = false,
@@ -186,6 +187,30 @@ define([
   };
 
   /**
+    Method shows information bar at the bottom of the screen.
+
+    @method _showStatus
+    @for Drawer
+    @param {String} message that would be shown to user.
+    @param {number} timeout time.
+    @static
+    @private
+  */
+  function _showStatus(message, timeout) {
+    if (message === undefined) {
+      message = '';
+    }
+    if (timeout === undefined) {
+      timeout = 2000;
+    }
+
+    $('body').append(_.template(statusTemplate, {message: message}));
+    window.setTimeout(function() {
+      $('section[role="status"]').first().remove();
+    }, timeout);
+  }
+
+  /**
     Drawer view that is extension of [Backbone.View](http://backbonejs.org/#View).
 
     @class Drawer
@@ -242,6 +267,7 @@ define([
       @method removeAllWindow
       @for Drawer
     */
-    removeAllWindow: _removeAllWindow
+    removeAllWindow: _removeAllWindow,
+    showStatus: _showStatus
   });
 });
