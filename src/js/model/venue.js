@@ -40,8 +40,11 @@ define([
       Performs the checkin action.
 
       @method checkin
-      @param {function} success callback
-      @param {function} error callback
+      @param {Object} options
+        @param {function} error callback
+        @param {function} success callback
+        @param {String} shout
+        @param {String} broadcast
     */
     checkin: function(options) {
       if (typeof (options.success) !== 'function' || typeof (options.error) !== 'function') {
