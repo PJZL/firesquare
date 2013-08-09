@@ -37,22 +37,27 @@ define([
       return data;
     },
     /**
-      Preforms the checkin action.
+      Performs the checkin action.
 
       @method checkin
       @param {function} success callback
       @param {function} error callback
     */
-    checkin: function(success, error) {
+    checkin: function(options) {
+      if (typeof(options.success) != 'function' || typeof(options.error) != 'function') {
+        return false;
+      }
+
       return $.ajax({
         url: 'https://api.foursquare.com/v2/checkins/add',
         data: {
           venueId:      this.get('id'),
-          oauth_token:  service.foursquare.get('access_token')//,
-          //TODO: shout:        'Nie ma mnie tu! - to tylko test!'
+          oauth_token:  service.foursquare.get('access_token'),
+          shout: options.shout,
+          broadcast: options.broadcast != undefined ? options.broadcast : 'public'
         },
-        success: success,
-        error: error,
+        success: options.success,
+        error: options.error,
         type: 'POST'
       });
     }
