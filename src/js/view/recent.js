@@ -27,13 +27,14 @@ define([
     @method _initialize
     @namespace View
     @for Recent
+    @param {Backbone.Collection} collection of recent checkins.
     @static
     @private
   */
   function _show(collection) {
     _drawer.setContent(_.template(template));
-    $(collection.models).each(function() {
-      _add(this);
+    collection.each(function(checkin) {
+      _add(checkin);
     });
     $('body > section > header').prepend('<menu type="toolbar"><a href="#"><span class="icon icon-update">add</span></a></menu>');
     $('body > section > header > menu > a .icon-update').on('click', _update);
