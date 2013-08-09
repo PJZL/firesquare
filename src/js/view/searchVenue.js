@@ -11,9 +11,9 @@ define([
 
   var _drawer,
     _position = {
-      gps: undefined,
-      checkin: undefined,
-      service: undefined
+      gps: null,
+      checkin: null,
+      service: null
     },
     _search,
     _positionWatch;
@@ -80,23 +80,23 @@ define([
     }
 
     //Check if we have any position.
-    if (((_position.gps !== undefined && _position.gps !== false) ||
-        _position.checkin !== undefined ||
-        _position.service !== undefined) &&
+    if (((_position.gps !== null && _position.gps !== false) ||
+        _position.checkin !== null ||
+        _position.service !== null) &&
         input.val() !== '') {
       _showProgress();
       //If we have a gps position.
-      if (_position.gps !== undefined && _position.gps !== false) {
+      if (_position.gps !== null && _position.gps !== false) {
         _getSearch(_position.gps);
-      } else if (_position.checkin !== undefined &&
-          _position.service !== undefined) {
+      } else if (_position.checkin !== null &&
+          _position.service !== null) {
         //If we have both checkin and service. Service country should be right.
         if (_position.checkin.country !== _position.service.country_name) {
           _getSearch(_position.service);
         } else {
           _getSearch(_position.checkin);
         }
-      } else if (_position.checkin !== undefined) {
+      } else if (_position.checkin !== null) {
         _getSearch(_position.checkin);
       } else {
         _getSearch(_position.service);
@@ -216,7 +216,7 @@ define([
     if (event !== undefined) {
       event.preventDefault();
     }
-    if (_position.gps === undefined) {
+    if (_position.gps === null) {
       _drawer.showStatus('Still waiting for <strong>GPS</strong> signal. You can try to search anyway.');
     } else if (_position.gps === false) {
       _drawer.showStatus('<strong>GPS</strong> device is unavailable');
