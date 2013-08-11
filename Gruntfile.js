@@ -64,6 +64,7 @@ module.exports = function(grunt) {
               'manifest.webapp',
               'css/**',
               'ico/**',
+              'img/**',
               'components/backbone/backbone-min.js',
               'components/underscore/underscore-min.js',
               'components/jquery/jquery.min.js',
