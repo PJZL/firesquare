@@ -10,6 +10,7 @@ define([
   'use strict';
 
   var _drawer,
+    //TODO: position should not be static variable.
     _position = {
       gps: null,
       checkin: null,
@@ -117,6 +118,8 @@ define([
       _position.gps = position.coords;
       $('body > section > header > menu > a .icon').removeClass('waiting');
       _updateSearch();
+      //We don't need to watch position all the time after we fetch one.
+      window.navigator.geolocation.clearWatch(_positionWatch);
     }
 
     function _error() {
@@ -242,6 +245,10 @@ define([
     $('section header a').last().on('click', _drawer.removeWindow);
     $('section div[role="main"]').last().html(_.template(template));
     $('input').on('keyup', _updateSearch);
+    //TODO: position should not be static variable!
+    _position.gps = null;
+    _position.service = null;
+    _position.checkin = null;
     _getGPS();
     _getCheckin();
     _getService();
