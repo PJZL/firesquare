@@ -1,6 +1,6 @@
 {
   "name": "FireSquare",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "FourSquare client for Firefox OS",
   "launch_path": "/index.html",
   "developer": {
