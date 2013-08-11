@@ -1,12 +1,13 @@
 define([
   'text!template/recent.html',
   'text!template/checkin.html',
+  'text!template/progress.html',
   'view/drawer',
   'view/venue',
   'view/searchVenue',
   'collection/recent',
   'model/venue'
-], function (template, checkinTemplate, Drawer, Venue, SearchVenue, Recent, VenueModel) {
+], function (template, checkinTemplate, progressTemplate, Drawer, Venue, SearchVenue, Recent, VenueModel) {
   'use strict';
   var _drawer,
     _recent,
@@ -21,6 +22,26 @@ define([
   }
 
   /**
+    Method shows the main view. After the spinner.
+
+    @method _initialize
+    @namespace View
+    @for Recent
+    @param {Backbone.Collection} collection of recent checkins.
+    @static
+    @private
+  */
+  function _show(collection) {
+    _drawer.setContent(_.template(template));
+    collection.each(function(checkin) {
+      _add(checkin);
+    });
+    $('body > section > header').prepend('<menu type="toolbar"><a href="#"><span class="icon icon-update">add</span></a></menu>');
+    $('body > section > header > menu > a .icon-update').on('click', _update);
+    _recent.on('add', _add);
+  }
+
+  /**
     Method is called when Login object is initialised.
 
     @method _initialize
@@ -32,15 +53,12 @@ define([
   function _initialize() {
     _drawer = new Drawer(_remove, _update);
     _drawer.setTitle('Recent checkins');
-    _drawer.setContent(_.template(template));
+    _drawer.setContent(_.template(progressTemplate));
 
     _recent = new Recent();
-    _recent.on('add', _add);
-    _fetch = _recent.fetch();
-
-    $('body > section > header').prepend('<menu type="toolbar"><a href="#"><span class="icon icon-update">add</span></a><a href="#"><span class="icon icon-search">add</span></a></menu>');
-    $('body > section > header > menu > a .icon-update').on('click', _update);
-    $('body > section > header > menu > a .icon-search').on('click', _searchVenue);
+    _fetch = _recent.fetch({
+      success: _show
+    });
   }
 
   /**

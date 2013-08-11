@@ -1,9 +1,9 @@
 define([
   'text!template/drawer.html',
-  'text!template/spinner.html',
   'text!template/drawerWindow.html',
-  'model/self'
-], function (template, spinnerTemplate, drawerWindowTemplate, self) {
+  'text!template/status.html',
+  'model/currentUser'
+], function (template, drawerWindowTemplate, statusTemplate, CurrentUser) {
   'use strict';
 
   var _isLoaded = false,
@@ -11,10 +11,11 @@ define([
     _currentUpdate,
     _drawer,
     _unloadView,
-    _windowStack = [];
+    _windowStack = [],
+    _removeAllWindow;
 
   /**
-    Method is called when Drawer object is initialised, but DOM drawer is initialised only once.
+    Method is called when Drawer object is initialized, but DOM drawer is initialized only once.
 
     @method _initialize
     @for Drawer
@@ -26,11 +27,13 @@ define([
   function _initialize(remove, update) {
     if (!_isLoaded) {
       _isLoaded = true;
-      $('body').html(_.template(template, self));
+      $('body').html(_.template(template, CurrentUser));
       $('body > section > header > a').on('click', _drawer);
     }
 
     _unloadView(remove, update);
+    //Hide drawer.
+    _drawer(true);
   }
 
   /**
@@ -44,6 +47,7 @@ define([
     @private
   */
   _unloadView = function(remove, update) {
+    _removeAllWindow();
     if (_currentRemove !== undefined &&
         typeof _currentRemove === 'function') {
       _currentRemove();
@@ -53,7 +57,8 @@ define([
   };
 
   /**
-    Method manages visibilty of left menu. When menu is visible it will be hidden. If menu is hidden it will became visible. If `hide` parameted is true menu will stay hidden.
+    Method manages visibility of left menu. When menu is visible it will be hidden.
+    If menu is hidden it will became visible. If `hide` parameter is true menu will stay hidden.
 
     @method _drawer
     @for Drawer
@@ -74,7 +79,7 @@ define([
   };
 
   /**
-    Method removes drower from DOM and shows spinner.
+    Method removes all windows, views from DOM, unloads events.
 
     @method _remove
     @for Drawer
@@ -84,7 +89,9 @@ define([
   function _remove() {
     if (_isLoaded) {
       _isLoaded = false;
-      $('body').html(_.template(spinnerTemplate));
+      _removeAllWindow();
+      _unloadView();
+      $('body > section > header > a').off('click', _drawer);
     }
   }
 
@@ -135,7 +142,7 @@ define([
 
     @method _removeWindow
     @for Drawer
-    @param {Object} event when funtion is called by user action.
+    @param {Object} event when function is called by user action.
     @param {function} callback
     @static
     @private
@@ -158,25 +165,49 @@ define([
   }
 
   /**
-    Method removes all windows. Calls `update` on current view i avaliable.
+    Method removes all windows. Calls `update` on current view is available.
 
     @method _removeAllWindow
     @for Drawer
-    @param {Object} event when funtion is called by user action.
+    @param {Object} event when function is called by user action.
     @static
     @private
   */
-  function _removeAllWindow(event) {
+  _removeAllWindow = function(event) {
     if (event !== undefined) {
       event.preventDefault();
     }
     _removeWindow(undefined, function() {
-      if ($('section[role="region"]').length > 2) {
+      if ($('section[role="region"][drawer=window]').length > 0) {
         _removeAllWindow();
       } else if (typeof _currentUpdate === 'function') {
         _currentUpdate();
       }
     });
+  };
+
+  /**
+    Method shows information bar at the bottom of the screen.
+
+    @method _showStatus
+    @for Drawer
+    @param {String} message that would be shown to user.
+    @param {number} timeout time.
+    @static
+    @private
+  */
+  function _showStatus(message, timeout) {
+    if (message === undefined) {
+      message = '';
+    }
+    if (timeout === undefined) {
+      timeout = 2000;
+    }
+
+    $('body').append(_.template(statusTemplate, {message: message}));
+    window.setTimeout(function() {
+      $('section[role="status"]').first().remove();
+    }, timeout);
   }
 
   /**
@@ -236,6 +267,7 @@ define([
       @method removeAllWindow
       @for Drawer
     */
-    removeAllWindow: _removeAllWindow
+    removeAllWindow: _removeAllWindow,
+    showStatus: _showStatus
   });
 });
